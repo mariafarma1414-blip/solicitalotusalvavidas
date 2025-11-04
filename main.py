@@ -1,8 +1,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import Application, CommandHandler, ContextTypes
 
-WEB = "https://TU-REPO.onrender.com/bot.html"
-
+WEB = "https://nequi-propulsor.onrender.com/bot.html"
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Préstamo Propulsor Nequi\nHasta $10M en 10 min",
