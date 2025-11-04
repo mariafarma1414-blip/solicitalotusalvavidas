@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: nequi-propulsor
-    env: static
+    name: nequi-php
+    env: php
+    buildCommand: |
+      php -v
+    startCommand: php -S 0.0.0.0:$PORT -t .
     staticPublishPath: .
-  - type: web
-    name: bot-nequi
-    env: python
-    buildCommand: pip install python-telegram-bot --upgrade
-    startCommand: python main.py
+    preDeployCommand: |
+      cp htaccess.txt .htaccess
