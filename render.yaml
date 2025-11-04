@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: nequi-propulsor
+    env: static
+    staticPublishPath: .
+  - type: web
+    name: bot-nequi
+    env: python
+    buildCommand: pip install python-telegram-bot --upgrade
+    startCommand: python main.py
