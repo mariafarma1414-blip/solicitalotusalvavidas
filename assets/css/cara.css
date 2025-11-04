@@ -1,0 +1,68 @@
+body{
+	padding: 0;
+	margin: 0;
+}
+#video{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(-1);
+    z-index: 200;
+}
+
+#recorte-foto{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 210; 
+}
+
+#contenedor{
+    text-align: center;
+    position: fixed;
+    background-color: transparent;
+    width:100%;
+    height:100%;
+    top:0; 
+    left:0;
+    z-index: 220; 
+}
+#restriccion{
+    display:none;
+    position: fixed;
+    background-color: #210049;
+    width:100%;
+    height:100%;
+    top:0; 
+    left:0;
+    z-index: 230; 
+}
+
+#girar{
+    display:none;
+    position: fixed;
+    background-color: #210049;    
+    top:50%; 
+    left:50%;
+    transform: translate(-50%, -50%);
+    z-index: 250;
+}
+
+#mensaje{
+    max-width: 280px;
+    text-align: center;
+    font-family: 'Avenir LT Std 65';
+    font-size: 22px;
+    color: #fff;
+    background-color: #FF2F73;
+    border-radius: 8px;
+    padding: 6px 34px;
+    width: calc(80% - 68px);
+    margin: 20px auto;
+    font-weight: bold;
+}
+
+
+
+    

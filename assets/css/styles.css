@@ -1,0 +1,413 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: 'Avenir Next LT Pro';
+}
+
+#tbl-bienvenido{
+	width: 94%;
+	max-width:790px; 
+	margin:0 auto;
+}
+
+#td-perfil{
+	width: 50%;
+	padding-right: 12px;
+}
+
+#td-bloqueo{
+	width: 50%;
+	padding-left: 12px;
+}
+
+#pnl-bloqueo{
+	width: calc(96% - 40px); 
+	max-width:340px;
+	margin: 14 auto;
+	text-align: center;
+	display: none;
+}
+
+.ultima-visita{
+	padding: 5px;
+	color: #7c8a96;
+    font-size: .75em;
+    text-align: center;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 1.42857143;
+}
+
+.cabecera{
+	background-color: #fff;
+	padding: 19px 0px;
+	z-index: 100;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+
+.contenido-pres{
+	background-color: #fff;
+	padding-top: 134px;
+	padding-bottom: 130px;
+	text-align: center;
+}
+
+.contenido-login{
+	padding-top: 134px;
+	padding-bottom: 130px;
+	background-image: url('../img/fondo.png');
+	text-align: center;
+}
+
+.contenido-interno{
+	background-color: #C8F7F3;
+	padding-top: 170px;
+	padding-bottom: 130px;
+	text-align: center;
+}
+.bar-menu{
+	width: 94%;
+	max-width: 1160px;
+	margin: 0 auto;
+	padding-top: 40px;
+}
+
+
+.menu-interno{
+	color: #210049;
+    font-size: .87em;
+	cursor: pointer;
+	padding-right: 30px;
+}
+
+.marcado{
+	color: #ff2f73 !important;
+}
+
+.menu-interno:hover{
+	color: #ff2f73;	
+}
+
+.pie{
+	background-color: #1A1446;
+	padding-top: 75px;
+}
+.btn{	
+    border-radius: 35px;        
+    padding: 7px 38px;
+    text-decoration: none;
+    font-family: 'Avenir LT Std 65';  
+    cursor: pointer;  
+}
+
+.btn-std{
+	border: 1px solid #ff2f73;
+	color: #ff2f73;
+	font-size: .87em;
+	background-color: #fff;
+}
+
+.btn-std:hover{
+	color: #fff;
+	background-color: #FF2F73;
+}
+
+.btn-sprd{
+	margin: 0px 10px;
+}
+
+.btn-big{
+	border-radius: 40px;
+    padding-right: 30px;
+    padding-left: 30px;
+    font-size: 1.125em;
+    line-height: 20px;
+    border: none;
+    height: 50px;
+    font-family: 'Avenir LT Std 65';  
+    cursor: pointer; 
+    width: 94%;
+    max-width: 362px;	
+}
+
+.btn-small{	
+    color: #fff;
+    font-size: .875em;
+    line-height: 1.2;    
+    border-radius: 30px;
+    padding: 10px 30px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border: 0;
+}
+
+.btn-fill{
+	background-color: #FF2F73;    
+    color: #fff;	
+}
+
+.btn-fill:hover{
+    background-color: #F50057;
+}
+
+.btn-fill:disabled{
+    opacity: .8;
+}
+
+.btn-fill:disabled:hover{
+    background-color: #FF2F73;
+}
+
+
+.titulo{
+	text-align: center;
+	color: #fff;
+	font-weight: 500;
+    line-height: 1.1;
+    font-size: 1.5em;
+    font-family: 'Avenir LT Std 65'; 
+}
+
+.descripcion{
+	text-align: center;
+	color: #fff;
+	font-size: 1em;
+}
+
+.entradas{
+	height: 50px;
+    border: none;
+    border-radius: 2px;
+    color: #a2b0b7;
+    font-size: 1em;
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    vertical-align: middle;
+    background-color: #fff;
+}
+
+.codigos{
+	font-weight: bold;
+    height: 50px;
+    border: none;
+    border-radius: 2px;
+    color: #FE2F73;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    padding: 8px 12px;
+    vertical-align: middle;
+    background-color: #EBEDED;
+}
+
+.titulo-footer{
+	color: rgba(255,255,255,.85);
+    font-size: 1.12em;
+    font-weight: 400;
+	font-family: 'Avenir LT Std 65';
+	padding-bottom: 2px;
+}
+
+.item-footer{
+	color: rgba(255,255,255,.85);
+	font-size: 1em;
+	padding: 7px 0px;
+}
+.item-copy{
+	color: rgba(255,255,255,.7);
+    font-size: .87em;
+    padding: 4px 25px;
+   	text-align: center;
+}
+
+#btn-menu{
+	display: none;
+}
+
+#logo-blanco-movil{
+	display: none;
+}
+.vmovil{
+	display: none;	
+}
+
+.separador{
+	border-bottom: 1px solid red; 
+	width:100%; 
+	margin-bottom: 20px;
+	display: none;
+}
+
+#gb-sec{
+	padding-top:156px;
+}
+
+#copy-menu{
+	display: flex;
+	align-items: flex-end;
+}
+
+
+#txt-indicativo{
+	font-size: 1em;
+	line-height: 48px;
+	color: #a2b0b7;
+}
+
+.con-indicativo{
+	font-size: 1em;
+	line-height: 48px;
+	color: #a2b0b7;
+}
+
+#indicativo{
+	border-radius: 2px 0px 0px 2px !important; 
+	width:calc(100% - 14px); 
+	background-color: #fff;
+	height: 49px; 
+	padding: 1px 2px 0px 12px;
+	cursor: pointer;
+}
+
+#menu-indicativo{
+	background-color: #fff;
+    position: absolute;
+    z-index: 300;
+    width: 106px;
+    display: none;
+}
+
+.item-indicativo{
+	width:calc(100% - 14px); 
+	background-color: #A2B0B7;
+	height: 49px; 
+	padding: 1px 2px 0px 12px;
+	cursor: pointer;	
+	border-bottom: 1px solid #fff;	
+}
+
+.item-indicativo:hover{
+	background-color: #E7E9EA;
+}
+
+#numero{
+	width: 150px;
+	margin: 0 auto;
+	font-size: 1.125em;
+    border-bottom: 2px solid #E7E9EA;
+    padding-bottom: 36px;
+    padding-top: 50px;
+    font-weight: 600;
+    color: #210049;
+    margin-bottom: 40px;
+}
+.panel{
+	background-color: #fff;
+	height:320px;
+	border-radius: 8px;
+	padding: 40px 20px;
+}
+
+
+.frm{
+	width: calc(94% - 40px);
+    max-width: 340px;
+    margin: 0 auto;
+    background-color: #fff;
+    height: 320px;
+    border-radius: 8px;
+    padding: 40px 20px;
+}
+
+.opcion-app{
+	padding: 7px;
+	border: 1px solid #C8C8C8;
+	border-radius: 8px;
+	margin: 10px 0px;
+	cursor: pointer;
+}
+
+.titulo-app{
+	font-size: 24px;
+	text-align: left;
+	color: #1B003C;
+	 font-family: 'Avenir Next LT Pro';
+	 font-weight: bold;
+	 line-height: 22px;
+	 margin-bottom: 20px;
+}
+
+
+.descripcioncode{
+	font-size: 16px;
+    color: #6A6A6A;
+    margin-top: 40px;
+}
+
+#celular{
+	font-size: 16px;
+    color: #FE2F73;
+}
+
+@media (max-width:991px) {
+	#pnl-bloqueo{
+		display: block;
+	}
+
+	.contenido-interno{
+		padding-top: 110px;
+	}
+
+	#tbl-bienvenido{
+		width: 96%;
+		max-width:380px;
+	}
+
+	#btn-menu,#logo-blanco-movil{
+		display: block;
+	}
+
+	.top-btn,#logo-blanco,.bar-menu,#td-bloqueo{
+		display: none;
+	}	
+
+	.pie {	   
+	    padding-top: 30px;
+	}	
+	#td-perfil{
+		width: 100%;
+		padding-right: unset;
+	}
+}
+
+@media (max-width:767px) {	
+	.vmovil{
+		display: block;	
+	}
+	.mmovil{
+		display: none;
+	}
+	#gb-sec{
+		padding-top:30px;
+	}
+	.separador{
+		display: block;
+	}
+}
+
+@media (max-width:532px) {	
+	#copy-menu{
+		display: unset;
+	}
+}
+
+@media (max-width:480px) {	
+	#app{
+		display: none;
+	}
+}

