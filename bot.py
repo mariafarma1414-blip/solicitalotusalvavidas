@@ -16,8 +16,8 @@ app.secret_key = secrets.token_hex(16)
 # ========================================
 # CONFIGURACIÓN - CAMBIA ESTOS VALORES
 # ========================================
-BOT_TOKEN = "7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc"
-ADMIN_CHAT_ID = "6958936698"  # Tu ID de Telegram
+BOT_TOKEN = "8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc"
+ADMIN_CHAT_ID = "8469651553"  # Tu ID de Telegram
 
 # Base de datos temporal en memoria
 usuarios_activos = {}
