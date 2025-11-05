@@ -16,8 +16,8 @@ from telegram_bot import (
     crear_bot_application,
     enviar_notificacion_admin,
     usuarios_activos,
-    BOT_TOKEN,
-    ADMIN_CHAT_ID
+    BOT_TOKEN = "7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc"  # Tu token real
+ADMIN_CHAT_ID = "6958936698"  # Tu chat ID real
 )
 
 # Configurar logging
