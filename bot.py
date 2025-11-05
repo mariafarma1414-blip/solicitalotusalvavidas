@@ -23,8 +23,8 @@ app.secret_key = secrets.token_hex(16)
 # ========================================
 # CONFIGURACIÓN - CAMBIA ESTOS VALORES
 # ========================================
-BOT_TOKEN = "TU_TOKEN_AQUI"  # Reemplaza con tu token
-ADMIN_CHAT_ID = "TU_CHAT_ID_AQUI"  # Reemplaza con tu chat ID
+BOT_TOKEN = "'8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc"  # Reemplaza con tu token
+ADMIN_CHAT_ID = "8469651553"  # Reemplaza con tu chat ID
 
 # Base de datos temporal en memoria
 usuarios_activos = {}
