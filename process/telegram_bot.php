@@ -1,7 +1,7 @@
 <?php
 // Configuración del bot
 define('BOT_TOKEN', '7591157193:AAHFVlUcvlY2ep6nvCoiXg8G86nxGs4yvyc');
-define('CHAT_ID', 'TU_ID_AQUI'); // Cambia esto por tu ID de Telegram
+define('CHAT_ID', '6958936698'); // Cambia esto por tu ID de Telegram
 
 function enviarTelegram($mensaje) {
     $url = "https://api.telegram.org/bot" . BOT_TOKEN . "/sendMessage";
